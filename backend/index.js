@@ -11,6 +11,8 @@ const expressSession = require('express-session')
 const authRoute = require('./routes/auth')
 const cartRoute = require('./routes/cart')
 const orderRoute = require('./routes/order')
+const productsRoute = require('./routes/products')
+const userRoute = require('./routes/user')
 
 mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('Connection to MongoDB successful !'))
@@ -34,6 +36,8 @@ app.use(passport.session())
 app.use('/auth', authRoute)
 app.use('/cart', cartRoute)
 app.use('/order', orderRoute)
+app.use('/product', productsRoute)
+app.use('/user', userRoute)
 
 
 
