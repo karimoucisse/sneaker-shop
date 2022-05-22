@@ -1,9 +1,10 @@
 const express = require('express')
 const app = express()
 const Product = require('../models/Product')
+const { isAdmin } = require('../middlewares/isAdmin')
 
 // CREATE ONE PRODUCT
-app.post('/', async (req, res) => {
+app.post('/', isAdmin, async (req, res) => {
    const newProduct = new Product(req.body) 
    try {
         const savedProduct = await newProduct.save()
@@ -14,7 +15,7 @@ app.post('/', async (req, res) => {
 })
 
 //MODIFY ONE PRODUCT
-app.put('/:id', async (req, res) => {
+app.put('/:id', isAdmin, async (req, res) => {
     const {id} = req.params
     try {
         const modifyProduct = await Product.findByIdAndUpdate(
@@ -31,7 +32,7 @@ app.put('/:id', async (req, res) => {
 })
 
 // DELETE ONE PRODUCT
-app.delete('/:id', async (req, res) => {
+app.delete('/:id', isAdmin, async (req, res) => {
     const {id} = req.params
     try {
         await Product.findByIdAndDelete(id)

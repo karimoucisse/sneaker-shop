@@ -1,9 +1,10 @@
 const express = require('express')
 const app = express()
 const Cart = require('../models/Cart')
+const { isAdmin } = require('../middlewares/isAdmin')
 
 //CREATE CART
-apppost('/', async (req, res) => {
+app.post('/', async (req, res) => {
     const newCart = new Cart(req.body)
     try {
         const savedCart = await newCart.save()
@@ -54,7 +55,7 @@ app.get('/:userId', async (req, res) => {
 })
 
 // GET ALL CART
-app.get('/', async (rec, res) => {
+app.get('/', isAdmin, async (rec, res) => {
     try {
         const carts = await Cart.find()
         res.status(200).json(carts)

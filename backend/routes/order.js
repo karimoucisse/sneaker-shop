@@ -1,7 +1,7 @@
 const express = require('express')
 const app = express()
 const Order = require('../models/Order')
-
+const { isAdmin } = require('../middlewares/isAdmin')
 // CREATE ORDER
 app.post('/', async (req, res) => {
     const neworder = new Order (req.body)
@@ -55,8 +55,8 @@ app.get('/:userId', async (req, res) => {
 
 })
 
-// GET ALL CART
-app.get('/', async (req, res) => {
+// GET ALL ORDERS
+app.get('/', isAdmin,  async (req, res) => {
    try {
        const orders = await Order.find()
        res.status(200).json(orders)

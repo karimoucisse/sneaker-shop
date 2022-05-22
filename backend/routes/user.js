@@ -2,9 +2,10 @@ const express = require('express')
 const app = express()
 const Users = require('../models/User')
 const bcrypt = require('bcrypt')
+const { isAdmin } = require('../middlewares/isAdmin')
 
 //GET ALL USER
-app.get('/', async (req,res) => {
+app.get('/', async, isAdmin, (req,res) => {
     try {
         const users = await Users.find()
         .exec()
@@ -27,6 +28,7 @@ app.get('/:id', async (req, res) => {
     }
 
 })
+
 // MODIFY ONE USER INFORMATION 
 app.put('/:id', async (req, res) => {
     const {id} = req.params

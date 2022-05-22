@@ -3,10 +3,10 @@ const app = express()
 const User = require('../models/User')
 const bcrypt = require('bcrypt')
 const passport = require('../config/passport')
-const {isSamaEmail} = require('../middlewares/sameAdmin')
+const {isSameEmail} = require('../middlewares/sameEmail')
 
 // ALLOW USER TO SIGNUP
-app.post("/signup", isSamaEmail, (req, res) => {
+app.post("/signup", isSameEmail, (req, res) => {
     bcrypt.hash(req.body.password, 10)
         .then(hash => {
             const user = new User({

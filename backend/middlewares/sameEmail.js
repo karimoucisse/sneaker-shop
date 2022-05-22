@@ -1,6 +1,6 @@
 let User = require('../models/User')
 
-const isSamaEmail = async (req, res, next) => {
+const isSameEmail = async (req, res, next) => {
     const {email} = await req.body
     console.log(req.body);
 
@@ -12,5 +12,5 @@ const isSamaEmail = async (req, res, next) => {
     }
 }
 module.exports = {
-    isSamaEmail
+    isSameEmail
 }
