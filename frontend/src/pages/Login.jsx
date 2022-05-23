@@ -1,5 +1,11 @@
 import styled from "styled-components"
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import { useFormik } from 'formik'
+import * as Yup from 'yup'
 
 const Container = styled.div`
     width: 100vw;
@@ -24,9 +30,37 @@ const Form = styled.form`
     flex-direction: column;
 
 `
+const PasswordContainer = styled.div`
+    position: relative;
+`
+const CloseEyeIcon = styled(VisibilityOffIcon) `
+    color: grey;
+    position: absolute;
+    right: 10px;
+    top: 0px;
+    bottom: 0;
+    margin: auto 0;
+    cursor: pointer;
+    &:hover {
+        color: #979494;
+    }
+`
+const OpenEyeIcon = styled(VisibilityIcon) `
+    color: grey;
+    position: absolute;
+    right: 10px;
+    top: 0px;
+    bottom: 0;
+    margin: auto 0;
+    cursor: pointer;
+    &:hover {
+        color: #979494;
+    }
+`
 const Input = styled.input`
     flex: 1;
-    min-width: 40%;
+    /* min-width: 40%; */
+    width: 100%;
     margin:15px 0 ;
     outline: none;
     padding: 10px;
@@ -66,13 +100,75 @@ const Linker = styled(Link)`
 `
 
 const Login = () => {
+    const navigate = useNavigate()
+    const [isHidden, setIsHidden] = useState(true)
+
+    const formik = useFormik({
+        initialValues: {
+            email: "karimou.cisse@gmail.com",
+            password: "Karimou1234",
+        },
+
+        onSubmit: async values => {
+            login(values)
+            navigate('/')
+        },
+
+        validateOnChange: false,
+        validationSchema: Yup.object({
+            
+            password: Yup.string()
+                .required("Mot de passe est requis"),
+            email: Yup.string()
+                .email("Email est incorrecte")
+                .required("email est requis")
+        })
+    })
+
+    const login = async values => {
+        const response = await fetch ('http://localhost:5000/auth/login', {
+            method: 'post',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            credentials: 'include',
+            body: JSON.stringify(values)
+        })
+        // if(response.status >= 400) {
+        //     alert("Error")
+        // } else {
+        //     const userLogged = await response.json()
+        //     setUser(userLogged)
+        //     navigate('/')
+        // }
+    }
+
+
   return (
     <Container>
         <Wrapper>
             <Title>LOGIN</Title>
-            <Form>
-                <Input placeholder= "email"/>
-                <Input placeholder= "mot de passe"/>
+            <Form onSubmit={formik.handleSubmit}>
+                <Input 
+                    placeholder= "email"
+                    type= "text"
+                    name= "email"
+                    value= {formik.values.email}
+                    onChange={formik.handleChange}
+                />
+                <PasswordContainer>
+                    <Input 
+                        placeholder= "mot de passe" 
+                        type= {isHidden ? "password" : "text"}
+                        name= "password"
+                        value= {formik.values.password}
+                        onChange={formik.handleChange}
+                    />
+                    {isHidden 
+                        ? <CloseEyeIcon onClick={() => setIsHidden(false)}/> 
+                        : <OpenEyeIcon onClick={() => setIsHidden(true)}/>
+                    }
+                </PasswordContainer>
                 <Button>LOGIN</Button>
                 <Linker to ="/">Mot de passe oublié</Linker>
                 <Paragraph>Vous n'êtes pas encore membre ?<Linker to= "/signup">Rejoignez-nous.</Linker></Paragraph>
