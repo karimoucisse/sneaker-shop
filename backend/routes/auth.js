@@ -25,6 +25,7 @@ app.post("/signup", isSameEmail, (req, res) => {
 
 // ALLOW USER TO LOGIN
 app.post("/login", passport.authenticate("local"), (req, res) => {
+    // console.log(req.user);
     if(req.user) {
         req.logIn(req.user, async err => {
             if(err) {
@@ -36,6 +37,20 @@ app.post("/login", passport.authenticate("local"), (req, res) => {
                 res.json(user)
             }
         })
+    }
+})
+
+app.get('/me', async (req, res) => {
+    if (req.user) {
+        try {
+            const user = await User.findById(req.user[0]._id)
+            res.json(user)
+            console.log(user);
+        } catch(err) {
+            console.log(err)
+        }
+    } else {
+        res.status(401).json({ error: "Unauthorized"})
     }
 })
 

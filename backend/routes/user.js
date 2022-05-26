@@ -5,7 +5,7 @@ const bcrypt = require('bcrypt')
 const { isAdmin } = require('../middlewares/isAdmin')
 
 //GET ALL USER
-app.get('/', async, isAdmin, (req,res) => {
+app.get('/', isAdmin, async (req,res) => {
     try {
         const users = await Users.find()
         .exec()
@@ -28,6 +28,7 @@ app.get('/:id', async (req, res) => {
     }
 
 })
+
 
 // MODIFY ONE USER INFORMATION 
 app.put('/:id', async (req, res) => {

@@ -36,7 +36,7 @@ app.use(passport.session())
 app.use('/auth', authRoute)
 app.use('/cart', cartRoute)
 app.use('/order', orderRoute)
-app.use('/product', productsRoute)
+app.use('/products', productsRoute)
 app.use('/user', userRoute)
 
 

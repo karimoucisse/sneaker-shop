@@ -1,7 +1,8 @@
 import styled from "styled-components"
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import {useContext, useState, useEffect } from "react";
+import { UserContext } from "../context/User";
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { useFormik } from 'formik'
@@ -102,6 +103,7 @@ const Linker = styled(Link)`
 const Login = () => {
     const navigate = useNavigate()
     const [isHidden, setIsHidden] = useState(true)
+    const {setUser} = useContext(UserContext)
 
     const formik = useFormik({
         initialValues: {
@@ -111,7 +113,6 @@ const Login = () => {
 
         onSubmit: async values => {
             login(values)
-            navigate('/')
         },
 
         validateOnChange: false,
@@ -134,13 +135,13 @@ const Login = () => {
             credentials: 'include',
             body: JSON.stringify(values)
         })
-        // if(response.status >= 400) {
-        //     alert("Error")
-        // } else {
-        //     const userLogged = await response.json()
-        //     setUser(userLogged)
-        //     navigate('/')
-        // }
+        if(response.status >= 400) {
+            alert("Error")
+        } else {
+            const userLogged = await response.json()
+            setUser(userLogged)
+            navigate('/')
+        }
     }
 
 

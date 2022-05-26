@@ -2,7 +2,10 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Badge from '@mui/material/Badge';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../context/User";
+import { useContext } from "react";
 
 const Container = styled.div`
     height: 60px;
@@ -74,6 +77,7 @@ const BadgeContainer = styled.div`
     }
 `
 const Navbar = () => {
+    const {user} = useContext(UserContext)
     const navigate = useNavigate()
   return (
     <Container>
@@ -87,13 +91,22 @@ const Navbar = () => {
                 <Category to='/products/Kid'>Enfant</Category>
             </Center>
             <Right>
-                <MenuItem to= "/signup">SIGN IN</MenuItem>
-                <MenuItem to= "/login">LOGIN</MenuItem>
-                <BadgeContainer>
-                    <Badge badgeContent={4} color="primary">
-                        <ShoppingCartIcon color="action" />
-                    </Badge>
-                </BadgeContainer>
+                {!user && 
+                    <>
+                        <MenuItem to= "/signup">SIGN IN</MenuItem>
+                        <MenuItem to= "/login">LOGIN</MenuItem>
+                    </>
+                }
+                {user && 
+                    <>
+                        <MenuItem to= "/"><AccountCircleIcon/></MenuItem>
+                        <BadgeContainer>
+                            <Badge badgeContent={4} color="primary">
+                                <ShoppingCartIcon color="action" />
+                            </Badge>
+                        </BadgeContainer>
+                    </>
+                } 
             </Right>
         </SubContainer>
     </Container>
