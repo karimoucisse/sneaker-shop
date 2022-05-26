@@ -16,7 +16,7 @@ const SubContainer = styled.div`
     align-items: center;
     width: 100%;
     height: 100%;
-    padding: 10px 20px;
+    padding: 10px 20px 10px 40px;
 `
 const Left = styled.div`
     flex: 1;
@@ -25,9 +25,10 @@ const Left = styled.div`
 `
 const Logo = styled.div`
     font-weight: bold;
-    font-size: 20px;
+    font-size: 25px;
     text-align: center;
     cursor: pointer;
+    letter-spacing: 1px;
 `
 const Center = styled.div`
     flex: 1;
@@ -36,11 +37,12 @@ const Center = styled.div`
 `
 const Category = styled.div`
     flex: 1;
-    font-weight: 700;
+    font-size: 18px;
+    font-weight: 600;
     cursor: pointer;
     transition: all 0.2s ease-in-out;
     &:hover {
-        color: rgba(0,0,0,0.7);
+        color: rgba(0,0,0,0.6);
         /* transform: scale(1.007); */
     }
 `
