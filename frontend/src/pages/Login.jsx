@@ -7,6 +7,7 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
+import Navbar from "../components/Navbar";
 
 const Container = styled.div`
     width: 100vw;
@@ -147,6 +148,7 @@ const Login = () => {
 
   return (
     <Container>
+        <Navbar/>
         <Wrapper>
             <Title>LOGIN</Title>
             <Form onSubmit={formik.handleSubmit}>

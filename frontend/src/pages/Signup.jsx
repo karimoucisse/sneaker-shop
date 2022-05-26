@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
+import Navbar from "../components/Navbar";
 
 
 const Container = styled.div`
@@ -171,6 +172,7 @@ const Signup = () => {
     }
     return (
         <Container>
+            <Navbar/>
             <Wrapper>
                 <Title>CREATE AN ACCOUNT</Title>
                 <Form  onSubmit={formik.handleSubmit}>
