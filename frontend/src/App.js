@@ -13,8 +13,8 @@ const App = () => {
         <Route exact path = "/" element= {<Home/>} />
         <Route path = "/login" element= {<Login/>} />
         <Route path = "/signup" element= {<Signup/>} />
-        <Route path = "/Products" element= {<ProductsList/>} />
-        <Route path = "/Product" element= {<Product/>} />
+        <Route path = "/Products/:id" element= {<ProductsList/>} />
+        <Route path = "/Product/:id" element= {<Product/>} />
       </Routes>
     </BrowserRouter>
   )

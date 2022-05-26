@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Badge from '@mui/material/Badge';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
     height: 60px;
@@ -35,14 +36,15 @@ const Center = styled.div`
     display: flex;
     align-items: center;
 `
-const Category = styled.div`
+const Category = styled(Link)`
     flex: 1;
     font-size: 18px;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s ease-in-out;
+    color: black;
     &:hover {
-        color: rgba(0,0,0,0.6);
+        color: #444040;
         /* transform: scale(1.007); */
     }
 `
@@ -72,16 +74,17 @@ const BadgeContainer = styled.div`
     }
 `
 const Navbar = () => {
+    const navigate = useNavigate()
   return (
     <Container>
         <SubContainer>
             <Left>
-                <Logo>Sneaker Shop</Logo>
+                <Logo onClick={() => navigate('/')}>Sneaker Shop</Logo>
             </Left>
             <Center>
-                <Category>Homme</Category>
-                <Category>Femme</Category>
-                <Category>Enfant</Category>
+                <Category to='/products/Man'>Homme</Category>
+                <Category to='/products/Woman'>Femme</Category>
+                <Category to='/products/Kid'>Enfant</Category>
             </Center>
             <Right>
                 <MenuItem to= "/signup">SIGN IN</MenuItem>

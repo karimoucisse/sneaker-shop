@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { useParams } from "react-router-dom"
 import styled from "styled-components"
 import Footer from "../components/Footer"
 import Navbar from "../components/Navbar"
@@ -34,14 +35,16 @@ const Option = styled.option`
 `
 const ProductsList = () => {
     const [products, setProducts] = useState()
+    const {id} = useParams()
     
     useEffect(() => {
         getProducts()
+        console.log(id);
         // console.log('proddd: ' + products);
-    }, [])
+    }, [id])
 
     const getProducts = async () => {
-        const response = await fetch(`http://localhost:5000/products?category=Man`, {
+        const response = await fetch(`http://localhost:5000/products?category=${id}`, {
             credentials: 'include',
         })
         

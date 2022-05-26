@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import styled from "styled-components"
 import Footer from "../components/Footer"
 import Navbar from "../components/Navbar"
+import { useParams } from 'react-router-dom';
 
 const Container = styled.div`
 
@@ -100,13 +101,14 @@ const Product = () => {
     const [product, setProduct] = useState()
     const [color, setColor] = useState(null)
     const [typeNumber, setTypeNumber] = useState(0)
+    const {id} = useParams()
 
     useEffect(() => {
         getProduct()
     }, [])
 
     const getProduct = async () => {
-        const response = await fetch(`http://localhost:5000/products/628d10fa0f5b506ff929e492`, {
+        const response = await fetch(`http://localhost:5000/products/${id}`, {
             credentials: 'include',
         })
         

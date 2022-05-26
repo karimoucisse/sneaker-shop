@@ -1,9 +1,11 @@
 import styled from "styled-components"
+import { Link } from 'react-router-dom';
 
-const Container = styled.div`
-    /* flex: 1; */
+const Container = styled(Link)`
+    flex: 1;
     margin: 10px 20px 35px 0;
-    width: 320px;
+    min-width: 300px;
+    max-width: 340px;
     height: 330px;
     display: flex;
     flex-direction: column;
@@ -21,14 +23,14 @@ const Container = styled.div`
 const Image = styled.img`
     border-radius: 10px 10px 0 0;
     width: 100%;
-    height: 250px;
+    height: 240px;
     object-fit: cover;
 `
 const Desc = styled.div`
     background-color: #1c2930;
     color: #ffff;
     width: 100%;
-    padding: 5px 20px;
+    padding: 10px 20px;
     display: flex;
     justify-content: space-between;
 `
@@ -41,9 +43,8 @@ const Paragraph = styled.p`
     /* color: #525151; */
 `
 const Product = ({product}) => {
-    console.log('prod:' + product.types[0].Image);
   return (
-    <Container>
+    <Container to = {`/product/${product._id}`} onClick={() => console.log('hello word')}>
         <Image src= {product.types[0].image} />
         <Desc>
             <div>
