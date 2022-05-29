@@ -6,7 +6,7 @@ import Navbar from "../components/Navbar"
 import Products from "../components/Products"
 
 const Container = styled.div`
-
+    background-color: #FAF9F8;
 `
 const Title = styled.h1`
     margin: 20px;

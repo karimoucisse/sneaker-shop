@@ -35,13 +35,15 @@ const Logo = styled.div`
     letter-spacing: 1px;
 `
 const Center = styled.div`
-    flex: 1;
+    flex: 2;
     display: flex;
     align-items: center;
+    justify-content: center;
+    gap: 50px;
 `
 const Category = styled(Link)`
-    flex: 1;
-    font-size: 18px;
+    /* flex: 2; */
+    font-size: 20px;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s ease-in-out;
@@ -67,7 +69,7 @@ const MenuItem = styled(Link)`
         transform: scale(1.01);
     }
 `
-const BadgeContainer = styled.div`
+const BadgeContainer = styled(Link)`
     font-size: 14px;
     cursor: pointer;
     margin-left: 25px;
@@ -100,7 +102,7 @@ const Navbar = () => {
                 {user && 
                     <>
                         <MenuItem to= "/"><AccountCircleIcon/></MenuItem>
-                        <BadgeContainer>
+                        <BadgeContainer to= '/basket'>
                             <Badge badgeContent={4} color="primary">
                                 <ShoppingCartIcon color="action" />
                             </Badge>

@@ -5,7 +5,7 @@ import Navbar from "../components/Navbar"
 import { useParams } from 'react-router-dom';
 
 const Container = styled.div`
-
+    background-color: #FAF9F8;
 `
 const Wrapper = styled.div`
     display: flex;
