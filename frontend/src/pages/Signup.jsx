@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import Navbar from "../components/Navbar";
+import { motion } from 'framer-motion'
 
 
 const Container = styled.div`
@@ -171,7 +172,11 @@ const Signup = () => {
         // }
     }
     return (
-        <Container>
+        <motion.Container
+            initial= {{ oapcity: 0 }}
+            animate= {{ opacity: 1 }}
+            exit= {{ opacity: 0 }}
+        >
             <Navbar/>
             <Wrapper>
                 <Title>CREATE AN ACCOUNT</Title>
@@ -249,7 +254,7 @@ const Signup = () => {
                     <Button type="submit">S'inscrire</Button>
                 </Form>
             </Wrapper>
-        </Container>
+        </motion.Container>
     )
 }
 

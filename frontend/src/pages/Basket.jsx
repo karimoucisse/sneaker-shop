@@ -2,6 +2,7 @@ import styled from "styled-components"
 import BasketItems from "../components/BasketItems"
 import Footer from "../components/Footer"
 import Navbar from "../components/Navbar"
+import { motion } from 'framer-motion'
 
 const Container = styled.div`
     background-color: #FAF9F8;
@@ -15,7 +16,12 @@ const Left = styled.div`
 `
 const Basket = () => {
   return (
-    <Container>
+    <motion.div
+        style={{ backgroundColor: "#FAF9F8" }}
+        initial= {{ width: 0 }}
+        animate= {{ width: "100%" }}
+        exit= {{ x: window.innerWidth, transition: {duration: 0.3} }}
+    >
         <Navbar/>
         <Title>Panier</Title>
         <Left>
@@ -24,7 +30,7 @@ const Basket = () => {
             <BasketItems/>
         </Left>
         <Footer/>
-    </Container>
+    </motion.div>
   )
 }
 

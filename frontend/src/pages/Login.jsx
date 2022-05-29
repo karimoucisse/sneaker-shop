@@ -8,6 +8,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import Navbar from "../components/Navbar";
+import { motion } from 'framer-motion'
 
 const Container = styled.div`
     width: 100vw;
@@ -147,7 +148,11 @@ const Login = () => {
 
 
   return (
-    <Container>
+    <motion.Container
+        initial= {{ oapcity: 0 }}
+        animate= {{ opacity: 1 }}
+        exit= {{ opacity: 0 }}
+    >
         <Navbar/>
         <Wrapper>
             <Title>LOGIN</Title>
@@ -177,7 +182,7 @@ const Login = () => {
                 <Paragraph>Vous n'êtes pas encore membre ?<Linker to= "/signup">Rejoignez-nous.</Linker></Paragraph>
             </Form>
         </Wrapper>
-    </Container>
+    </motion.Container>
   )
 }
 

@@ -3,10 +3,9 @@ import styled from "styled-components"
 import Footer from "../components/Footer"
 import Navbar from "../components/Navbar"
 import { useParams } from 'react-router-dom';
+import { motion } from 'framer-motion'
 
-const Container = styled.div`
-    background-color: #FAF9F8;
-`
+
 const Wrapper = styled.div`
     display: flex;
     padding: 40px;
@@ -128,7 +127,11 @@ const Product = () => {
         }
     }
   return (
-    <Container>
+    <motion.div
+        initial= {{ width: 0 }}
+        animate= {{ width: "100%" }}
+        exit= {{ x: window.innerWidth, transition: {duration: 0.3} }}
+    >
         <Navbar/>
         <Wrapper>
             <Left>
@@ -158,7 +161,7 @@ const Product = () => {
             </Right>
         </Wrapper>
         <Footer/>
-    </Container>
+    </motion.div>
   )
 }
 

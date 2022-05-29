@@ -2,7 +2,7 @@ import styled from "styled-components"
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 
 const Container = styled.div`
-    max-width: 500px;
+    max-width: 600px;
     height: 180px;
     /* border: 2px solid; */
     display: flex;
@@ -18,9 +18,11 @@ const Left = styled.div`
 `
 const Image = styled.img`
     height: inherit;
+    object-fit: cover;
+    width: 100%;
 `
 const Right = styled.div`
-    flex: 3;
+    flex: 2;
     padding: 10px 20px;
     display: flex;
     flex-direction: column;

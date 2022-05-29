@@ -4,10 +4,9 @@ import styled from "styled-components"
 import Footer from "../components/Footer"
 import Navbar from "../components/Navbar"
 import Products from "../components/Products"
+import { motion } from 'framer-motion'
 
-const Container = styled.div`
-    background-color: #FAF9F8;
-`
+
 const Title = styled.h1`
     margin: 20px;
 `
@@ -56,9 +55,13 @@ const ProductsList = () => {
     }
     
   return (
-    <Container>
+    <motion.div
+        initial= {{ width: 0 }}
+        animate= {{ width: "100%" }}
+        exit= {{ x: window.innerWidth, transition: {duration: 0.3} }}
+    >
         <Navbar/>
-        <Title>MAN</Title>
+        <Title>{id}</Title>
         <FilterContainer>
             <Filter>
                 <FilterText>Filter brands: </FilterText>
@@ -81,7 +84,7 @@ const ProductsList = () => {
         </FilterContainer>
         <Products products= {products}/>
         <Footer/>
-    </Container>
+    </motion.div>
   )
 }
 
