@@ -1,9 +1,11 @@
 import styled from "styled-components"
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+import { useContext, useEffect, useState } from "react"
+import { CartContext } from "../context/Cart"
 
 const Container = styled.div`
     max-width: 600px;
-    height: 180px;
+    height: 130px;
     /* border: 2px solid; */
     display: flex;
     background-color: #ffff;
@@ -13,7 +15,7 @@ const Container = styled.div`
 `
 const Left = styled.div`
     flex: 1;
-    width: 200px;
+    /* width: 200px; */
     height: 100%;
 `
 const Image = styled.img`
@@ -63,23 +65,42 @@ const Select = styled.select`
 const Option = styled.option`
     font-size: 18px;
 `
-const BasketItems = () => {
+const BasketItems = ({item, index}) => {
+    const {cart, modifyCart} = useContext(CartContext)
+    // const {cartProducts, setCartProducts} = useState()
+
+    useEffect(() => {
+        // console.log("cart" + index);
+    }, [cart])
+
+    const onDeleteClick = () => {
+        const cartProducts = cart.products
+        cartProducts.splice(index, 1)
+        modifyCart(cart._id, cartProducts);
+    }
+
+    if(!cart) {
+        return null
+    }
+    if(!item) {
+        return null
+    }
   return (
     <Container>
         <Left>
-            <Image src= "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5/f6b75de7-5bdd-424c-8c9a-8718ac131dee/chaussure-air-jordan-1-mid-QJTvQh.png"/>
+            <Image src= {item.product[0].type.image} />
         </Left>
         <Right>
             <Top>
                 <div>
-                    <Title>jordan 1</Title>
-                    <Paragraph>Prix: 149€</Paragraph>
-                    <Paragraph>Couleur: black</Paragraph>
-                    <Paragraph>Taille: 40cm</Paragraph>
+                    <Title>{item.product[0].name}</Title>
+                    <Paragraph>Prix: {item.product[0].price}€</Paragraph>
+                    <Paragraph>Couleur: {item.product[0].type.color}</Paragraph>
+                    <Paragraph>Taille: {item.product[0].size}cm</Paragraph>
                 </div>
-                <DeleteContainer/>
+                <DeleteContainer onClick={() => onDeleteClick()}/>
             </Top>
-            <Bottom>
+            {/* <Bottom>
                 <Select>
                     <Option>40</Option>
                     <Option>41</Option>
@@ -89,7 +110,7 @@ const BasketItems = () => {
                     <Option>45</Option>
                     <Option>46</Option>
                 </Select>
-            </Bottom>
+            </Bottom> */}
         </Right>
     </Container>
   )

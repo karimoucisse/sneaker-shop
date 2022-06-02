@@ -8,6 +8,7 @@ import Signup from '../pages/Signup'
 import {Routes, Route, useLocation } from "react-router-dom"
 
 import { AnimatePresence } from 'framer-motion'
+import Account from '../pages/Account'
 // /dist/framer-motion
 
 const AnimatedRoutes = () => {
@@ -22,6 +23,7 @@ const AnimatedRoutes = () => {
             <Route path = "/Products/:id" element= {<ProductsList/>} />
             <Route path = "/Product/:id" element= {<Product/>} />
             <Route path = "/basket" element= {<Basket/>} />
+            <Route path = "/my-Account" element= {<Account/>} />
         </Routes>
     </AnimatePresence>
   )

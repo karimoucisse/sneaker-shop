@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import {useContext, useState, useEffect } from "react";
+import {useContext, useState } from "react";
 import { UserContext } from "../context/User";
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import VisibilityIcon from '@mui/icons-material/Visibility';
@@ -12,7 +12,7 @@ import { motion } from 'framer-motion'
 
 const Container = styled.div`
     width: 100vw;
-    height: 100vh;
+    height: calc(100vh - 60px);
     background: linear-gradient(rgba(255,255,255,0.4), rgba(255,255,255,0.2)),
     no-repeat url("/img_couverture.jpg") center;
     display: flex;
@@ -154,34 +154,36 @@ const Login = () => {
         exit= {{ opacity: 0 }}
     >
         <Navbar/>
-        <Wrapper>
-            <Title>LOGIN</Title>
-            <Form onSubmit={formik.handleSubmit}>
-                <Input 
-                    placeholder= "email"
-                    type= "text"
-                    name= "email"
-                    value= {formik.values.email}
-                    onChange={formik.handleChange}
-                />
-                <PasswordContainer>
+        <Container>
+            <Wrapper>
+                <Title>SE CONNECTER</Title>
+                <Form onSubmit={formik.handleSubmit}>
                     <Input 
-                        placeholder= "mot de passe" 
-                        type= {isHidden ? "password" : "text"}
-                        name= "password"
-                        value= {formik.values.password}
+                        placeholder= "email"
+                        type= "text"
+                        name= "email"
+                        value= {formik.values.email}
                         onChange={formik.handleChange}
                     />
-                    {isHidden 
-                        ? <CloseEyeIcon onClick={() => setIsHidden(false)}/> 
-                        : <OpenEyeIcon onClick={() => setIsHidden(true)}/>
-                    }
-                </PasswordContainer>
-                <Button>LOGIN</Button>
-                <Linker to ="/">Mot de passe oublié</Linker>
-                <Paragraph>Vous n'êtes pas encore membre ?<Linker to= "/signup">Rejoignez-nous.</Linker></Paragraph>
-            </Form>
-        </Wrapper>
+                    <PasswordContainer>
+                        <Input 
+                            placeholder= "mot de passe" 
+                            type= {isHidden ? "password" : "text"}
+                            name= "password"
+                            value= {formik.values.password}
+                            onChange={formik.handleChange}
+                        />
+                        {isHidden 
+                            ? <CloseEyeIcon onClick={() => setIsHidden(false)}/> 
+                            : <OpenEyeIcon onClick={() => setIsHidden(true)}/>
+                        }
+                    </PasswordContainer>
+                    <Button>SE CONNECTER</Button>
+                    <Linker to ="/">Mot de passe oublié</Linker>
+                    <Paragraph>Vous n'êtes pas encore membre ?<Linker to= "/signup">Rejoignez-nous.</Linker></Paragraph>
+                </Form>
+            </Wrapper>
+        </Container>
     </motion.Container>
   )
 }

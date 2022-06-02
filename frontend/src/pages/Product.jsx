@@ -1,9 +1,11 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useContext } from "react"
 import styled from "styled-components"
 import Footer from "../components/Footer"
 import Navbar from "../components/Navbar"
 import { useParams } from 'react-router-dom';
 import { motion } from 'framer-motion'
+import { CartContext } from "../context/Cart"
+import { UserContext } from "../context/User";
 
 
 const Wrapper = styled.div`
@@ -77,6 +79,10 @@ const FilterSize = styled.div`
         transform: scale(1.007);
         box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
     }
+    &:nth-child(${(props) => props.number}) {
+        background-color: ${(props) => props.number && '#212A2F'};
+        color: white;
+    }
 `
 
 const Button = styled.button`
@@ -99,8 +105,11 @@ const Button = styled.button`
 const Product = () => {
     const [product, setProduct] = useState()
     const [color, setColor] = useState(null)
+    const [number, setNumber] = useState(2)
     const [typeNumber, setTypeNumber] = useState(0)
     const {id} = useParams()
+    const {cart, setCart, modifyCart} = useContext(CartContext)
+    const {user} = useContext(UserContext)
 
     useEffect(() => {
         getProduct()
@@ -114,10 +123,7 @@ const Product = () => {
         const data = await response.json()
         setProduct(data)
     }
-    if(!product) {
-        return null
-    }
-
+    
     const onColorClick = (color) => {
         setColor(color)
         for(let i = 0; i< product.types.length; i++ ) {
@@ -126,6 +132,37 @@ const Product = () => {
             }
         }
     }
+    
+    const onAddBasketButtonClick = () => {
+        let products = cart.products
+        const content ={
+            product : {
+                name: product.name,
+                price: product.price,
+                size: product.size[number - 2],
+                type: product.types[typeNumber],
+            }
+        }  
+        products = [
+            ...products,
+            content
+        ]
+        modifyCart(cart._id, products)   
+        console.log("add into cart");
+    }
+
+    const onSizeClick = (item) => {
+        for(let i = 0; i < product.size.length; i++) {
+            if(product.size[i] === item) {
+                setNumber(i+2)
+            }
+        }
+    }
+
+    if(!product) {
+        return null
+    }
+    
   return (
     <motion.div
         initial= {{ width: 0 }}
@@ -153,11 +190,12 @@ const Product = () => {
                     <Filter>
                         <FilterTitle>Size</FilterTitle>
                         {product.size.map(item => {
-                            return <FilterSize>EU {item}</FilterSize>
+                            return <FilterSize onClick={() => onSizeClick(item)} number = {number}>EU {item}</FilterSize> 
+                            
                         })}
                     </Filter>
                 </FilterContainer>
-                <Button>Ajouter au panier</Button>
+                <Button onClick={() => onAddBasketButtonClick ()}>Ajouter au panier</Button>
             </Right>
         </Wrapper>
         <Footer/>

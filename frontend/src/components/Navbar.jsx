@@ -4,8 +4,9 @@ import Badge from '@mui/material/Badge';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { useNavigate } from "react-router-dom";
-import { UserContext } from "../context/User";
 import { useContext } from "react";
+import { UserContext } from "../context/User";
+import { CartContext } from "../context/Cart"
 
 const Container = styled.div`
     height: 60px;
@@ -33,6 +34,8 @@ const Logo = styled.div`
     text-align: center;
     cursor: pointer;
     letter-spacing: 1px;
+    color: #1e3e59;
+    text-shadow: 2px 2px 4px #d6d7d7;
 `
 const Center = styled.div`
     flex: 2;
@@ -80,7 +83,12 @@ const BadgeContainer = styled(Link)`
 `
 const Navbar = () => {
     const {user} = useContext(UserContext)
+    const {cart} = useContext(CartContext)
     const navigate = useNavigate()
+    
+    if(!cart) {
+        return null
+    }
   return (
     <Container>
         <SubContainer>
@@ -99,16 +107,13 @@ const Navbar = () => {
                         <MenuItem to= "/login">LOGIN</MenuItem>
                     </>
                 }
-                {user && 
-                    <>
-                        <MenuItem to= "/"><AccountCircleIcon/></MenuItem>
-                        <BadgeContainer to= '/basket'>
-                            <Badge badgeContent={4} color="primary">
-                                <ShoppingCartIcon color="action" />
-                            </Badge>
-                        </BadgeContainer>
-                    </>
-                } 
+                {user && <MenuItem to= "/my-account"><AccountCircleIcon/></MenuItem>}
+                <BadgeContainer to= '/basket'>
+                    <Badge badgeContent={cart.products.length} color="primary">
+                        <ShoppingCartIcon color="action" />
+                    </Badge>
+                </BadgeContainer>
+                    
             </Right>
         </SubContainer>
     </Container>

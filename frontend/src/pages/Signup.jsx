@@ -11,7 +11,7 @@ import { motion } from 'framer-motion'
 
 const Container = styled.div`
     width: 100vw;
-    height: 100vh;
+    height: calc(100vh - 60px);;
     background: linear-gradient(rgba(255,255,255,0.4), rgba(255,255,255,0.2)),
     no-repeat url("/img_couverture.jpg") center;
     display: flex;
@@ -178,82 +178,85 @@ const Signup = () => {
             exit= {{ opacity: 0 }}
         >
             <Navbar/>
-            <Wrapper>
-                <Title>CREATE AN ACCOUNT</Title>
-                <Form  onSubmit={formik.handleSubmit}>
-                    <Input 
-                        placeholder= "prénom"
-                        type= "text"
-                        name= "firstName"
-                        value= {formik.values.firstName}
-                        onChange={formik.handleChange}
-                    />
-                    {formik.errors.firstName && <ErrorMessage>{formik.errors.firstName}</ErrorMessage>}
-                    <Input 
-                        placeholder= "nom"
-                        type= "text"
-                        name= "lastName"
-                        value= {formik.values.lastName}
-                        onChange={formik.handleChange}
-                    />
-                    {formik.errors.lastName && <ErrorMessage>{formik.errors.lastName}</ErrorMessage>}
-                    <Input 
-                        placeholder= "email"
-                        type= "text"
-                        name= "email"
-                        value= {formik.values.email}
-                        onChange={formik.handleChange}
-                    />
-                    {formik.errors.email && <ErrorMessage>{formik.errors.email}</ErrorMessage>}
-                    <Input 
-                        placeholder= "age" 
-                        type= "text"
-                        name= "birthDate"
-                        value= {formik.values.birthDate}
-                        onChange={formik.handleChange}
-                    />
-                    {formik.errors.birthDate && <ErrorMessage>{formik.errors.birthDate}</ErrorMessage>}
-                    <Input 
-                        placeholder= "numero"
-                        type= "text"
-                        name= "phoneNumber"
-                        value= {formik.values.phoneNumber}
-                        onChange={formik.handleChange}
-                    />
-                    {formik.errors.numero && <ErrorMessage>{formik.errors.numero}</ErrorMessage>}
-                    <PasswordContainer>
-                        <PasswordInput 
-                            placeholder= "mot de passe" 
-                            type= {isHidden ? "password" : "text"}
-                            name= "password"
-                            value= {formik.values.password}
+            <Container>
+
+                <Wrapper>
+                    <Title>CREER UN COMPTE</Title>
+                    <Form  onSubmit={formik.handleSubmit}>
+                        <Input 
+                            placeholder= "prénom"
+                            type= "text"
+                            name= "firstName"
+                            value= {formik.values.firstName}
                             onChange={formik.handleChange}
                         />
-                        {isHidden 
-                            ? <CloseEyeIcon onClick={() => setIsHidden(false)}/> 
-                            : <OpenEyeIcon onClick={() => setIsHidden(true)}/>
-                        }
-                        
-                    </PasswordContainer>
-                    {formik.errors.password && <ErrorMessage>{formik.errors.password}</ErrorMessage>}
-                    <Input 
-                        placeholder= "adresse"
-                        type= "text"
-                        name= "adress"
-                        value= {formik.values.adress}
-                        onChange={formik.handleChange}
-                    />
-                    {formik.errors.adress && <ErrorMessage>{formik.errors.adress}</ErrorMessage>}
-                    {/* <PasswordContainer>
-                        <PasswordInput placeholder= "confirme mot de passe" type= "password"/>
-                    </PasswordContainer> */}
-                    <Agreement>
-                        By creating an account, I consent to the processing of my
-                        personnal data in accordance with the <b>PRIVACY POLICY</b> 
-                    </Agreement>
-                    <Button type="submit">S'inscrire</Button>
-                </Form>
-            </Wrapper>
+                        {formik.errors.firstName && <ErrorMessage>{formik.errors.firstName}</ErrorMessage>}
+                        <Input 
+                            placeholder= "nom"
+                            type= "text"
+                            name= "lastName"
+                            value= {formik.values.lastName}
+                            onChange={formik.handleChange}
+                        />
+                        {formik.errors.lastName && <ErrorMessage>{formik.errors.lastName}</ErrorMessage>}
+                        <Input 
+                            placeholder= "email"
+                            type= "text"
+                            name= "email"
+                            value= {formik.values.email}
+                            onChange={formik.handleChange}
+                        />
+                        {formik.errors.email && <ErrorMessage>{formik.errors.email}</ErrorMessage>}
+                        <Input 
+                            placeholder= "age" 
+                            type= "text"
+                            name= "birthDate"
+                            value= {formik.values.birthDate}
+                            onChange={formik.handleChange}
+                        />
+                        {formik.errors.birthDate && <ErrorMessage>{formik.errors.birthDate}</ErrorMessage>}
+                        <Input 
+                            placeholder= "numero"
+                            type= "text"
+                            name= "phoneNumber"
+                            value= {formik.values.phoneNumber}
+                            onChange={formik.handleChange}
+                        />
+                        {formik.errors.numero && <ErrorMessage>{formik.errors.numero}</ErrorMessage>}
+                        <PasswordContainer>
+                            <PasswordInput 
+                                placeholder= "mot de passe" 
+                                type= {isHidden ? "password" : "text"}
+                                name= "password"
+                                value= {formik.values.password}
+                                onChange={formik.handleChange}
+                            />
+                            {isHidden 
+                                ? <CloseEyeIcon onClick={() => setIsHidden(false)}/> 
+                                : <OpenEyeIcon onClick={() => setIsHidden(true)}/>
+                            }
+                            
+                        </PasswordContainer>
+                        {formik.errors.password && <ErrorMessage>{formik.errors.password}</ErrorMessage>}
+                        <Input 
+                            placeholder= "adresse"
+                            type= "text"
+                            name= "adress"
+                            value= {formik.values.adress}
+                            onChange={formik.handleChange}
+                        />
+                        {formik.errors.adress && <ErrorMessage>{formik.errors.adress}</ErrorMessage>}
+                        {/* <PasswordContainer>
+                            <PasswordInput placeholder= "confirme mot de passe" type= "password"/>
+                        </PasswordContainer> */}
+                        <Agreement>
+                            By creating an account, I consent to the processing of my
+                            personnal data in accordance with the <b>PRIVACY POLICY</b> 
+                        </Agreement>
+                        <Button type="submit">S'inscrire</Button>
+                    </Form>
+                </Wrapper>
+            </Container>
         </motion.Container>
     )
 }

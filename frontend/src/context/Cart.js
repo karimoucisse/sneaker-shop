@@ -10,14 +10,13 @@ const CartContextProvider = props => {
     const API = "http://localhost:5000/cart"
 
     useEffect(() => {
-        if(localStorage.getItem("userId")) {
-            GetOneCart(localStorage.getItem("userId"))
-            // console.log('get id');
+        if(localStorage.getItem("id")) {
+            GetOneCart(localStorage.getItem("id"))
         }else {
             createCart({
                 userId: user ? user._id : null
             })
-            // console.log('dont get id');
+            console.log('dont get id');
         }
 
         if(user) {
@@ -30,12 +29,11 @@ const CartContextProvider = props => {
                 )
             }
         }
-        console.log("cart" + cart);
-    }, [user])
+    }, [])
 
     const createCart = async values => {
         const response = await fetch (`${API}`, {
-            method: 'POST',
+            method: 'post',
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -47,24 +45,26 @@ const CartContextProvider = props => {
         } else {
             const Cart = await response.json()
             setCart(Cart)
-            localStorage.setItem("userId", user._id)
+            localStorage.setItem("id", Cart._id)
         }
 
     }
 
     const modifyCart = async (id, values) => {
         const response = await fetch (`${API}/${id}`, {
-            method: 'PUT',
+            method: 'put',
             headers: {
-                'Content-Type': 'application/json',
-            },
+                    'Content-Type': 'application/json',
+                },
             credentials: 'include',
-            body: JSON.stringify(values)
+            body: JSON.stringify(
+                {products: values}
+            )
         })
         if(response.status >= 400) {
-            console.log("error");
+            alert("Error")
         } else {
-            const Cart = await response.json()
+            GetOneCart(cart._id)
         }
     }
 
@@ -83,7 +83,8 @@ const CartContextProvider = props => {
         cart,
         setCart,
         GetOneCart,
-        createCart
+        createCart,
+        modifyCart
     }
 
     return (
