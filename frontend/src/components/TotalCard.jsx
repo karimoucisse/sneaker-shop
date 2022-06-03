@@ -2,7 +2,9 @@ import styled from "styled-components"
 import { useContext, useEffect, useState } from "react"
 import { CartContext } from "../context/Cart"
 import { UserContext } from "../context/User";
+import { OrderContext } from "../context/Order";
 import { useNavigate } from "react-router-dom"
+import StripeCheckout from "react-stripe-checkout";
 
 const Container = styled.div`
     flex: 1;
@@ -76,10 +78,22 @@ const ValidationBtn = styled.button`
 `
 
 const TotalCard = () => {
-    const {cart} = useContext(CartContext)
+    const {cart, modifyCart} = useContext(CartContext)
     const {user} = useContext(UserContext)
-    const [totalPrice, setTotalPrice] = useState(0)
+    const {createOrder} = useContext(OrderContext)
     const navigate = useNavigate()
+    const [totalPrice, setTotalPrice] = useState(0)
+    const finalTotal = totalPrice +4
+    const stripeTotal = finalTotal * 100
+    const stripePubliKey = "pk_test_51KuOfTD02MbHzUJv4QbJeezaYjUtN63wqsEq4rYz2ix8T0xQR4tVmqB0KCc0SyqaFrJlMAxrwZdPHWmY3hDjiTnP00hlEWdkpl"
+    const [stripeToken, setStripeToken] = useState() 
+
+    const newOrder = {
+        userId: user ? user._id : null,
+        products: cart.products,
+        amount: finalTotal,
+        address: user ? user.adress : null,
+    }
     useEffect(() => {
         let total = 0
         for (let i = 0; i < cart.products.length ; i++) {
@@ -88,8 +102,41 @@ const TotalCard = () => {
         setTotalPrice(total)
     }, [cart])
 
+    
+    const onToken = (token) => {
+        setStripeToken(token)
+    }
+    
+    useEffect(() => {
+        const stripeRequest = async () => {
+            const response = await fetch ('http://localhost:5000/payment', {
+                method: 'post',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                credentials: 'include',
+                body: JSON.stringify({
+                    tokenId: stripeToken.id,
+                    amount: stripeTotal,
+                })
+            })
+            if(response.status >= 400) {
+                createOrder(newOrder)
+            } else {
+                console.log('response: ' + response);
+            }
+        }
+        if(stripeToken) {
+            stripeRequest()
+            modifyCart(cart._id, [])
+            navigate('/')
+        }
+    }, [stripeToken])
 
     if(!cart) {
+        return null
+    }
+    if(!user) {
         return null
     }
   return (
@@ -112,9 +159,19 @@ const TotalCard = () => {
             </PriceContainer>
             <TotalContainer>
                 <TotalParagraph>Total:</TotalParagraph>
-                <TotalParagraph>{totalPrice + 4}€</TotalParagraph>
+                <TotalParagraph>{finalTotal}€</TotalParagraph>
             </TotalContainer>
-            <ValidationBtn>Finaliser la commande</ValidationBtn>
+            <StripeCheckout
+                name= "Sneaker Shop"
+                image= "https://cdn.shopify.com/s/files/1/2358/2817/products/air-max-90-off-white-desert-ore-672202.png?v=1638813390"
+                description={`Votre Total est de ` + finalTotal + "€" }
+                amount= {stripeTotal}
+                token = {onToken}
+                stripeKey= {stripePubliKey}
+                currency="EUR"
+            >
+                <ValidationBtn onClick={() => createOrder(newOrder)}>Finaliser la commande</ValidationBtn>
+            </StripeCheckout>
         </Card>
     </Container>
   )

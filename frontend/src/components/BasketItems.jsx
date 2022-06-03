@@ -52,19 +52,19 @@ const Paragraph = styled.p`
     font-size: 16px;
     margin-bottom: 5px;
 `
-const Bottom = styled.div`
+// const Bottom = styled.div`
 
-`
-const Select = styled.select`
-    padding: 5px 20px;
-    font-size: 18px;
-    cursor: pointer;
-    outline: none;
-    border: 0.5px solid ;
-`
-const Option = styled.option`
-    font-size: 18px;
-`
+// `
+// const Select = styled.select`
+//     padding: 5px 20px;
+//     font-size: 18px;
+//     cursor: pointer;
+//     outline: none;
+//     border: 0.5px solid ;
+// `
+// const Option = styled.option`
+//     font-size: 18px;
+// `
 const BasketItems = ({item, index}) => {
     const {cart, modifyCart} = useContext(CartContext)
     // const {cartProducts, setCartProducts} = useState()

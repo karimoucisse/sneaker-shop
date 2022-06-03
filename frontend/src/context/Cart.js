@@ -4,7 +4,7 @@ import { UserContext } from "./User";
 const CartContext = createContext()
 
 const CartContextProvider = props => {
-    const {user, setUser} = useContext(UserContext)
+    const {user} = useContext(UserContext)
     const [cart, setCart] = useState()
 
     const API = "http://localhost:5000/cart"
@@ -43,9 +43,7 @@ const CartContextProvider = props => {
         if(response.status >= 400) {
             console.log("error");
         } else {
-            const Cart = await response.json()
-            setCart(Cart)
-            localStorage.setItem("id", Cart._id)
+            console.log("success");
         }
 
     }
@@ -73,7 +71,7 @@ const CartContextProvider = props => {
             credentials: 'include'
         })
         if (response.status >= 400) {
-            throw response.stautusText
+            throw response.statusText
         }
         const data = await response.json()
         setCart(data)

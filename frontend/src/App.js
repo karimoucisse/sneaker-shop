@@ -1,6 +1,7 @@
 import { UserContextProvider } from "./context/User"
 import { CartContextProvider } from "./context/Cart"
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom"
+import { OrderContextProvider } from "./context/Order"
+import { BrowserRouter} from "react-router-dom"
 
 import AnimatedRoutes from "./components/AnimatedRoutes"
 
@@ -11,7 +12,9 @@ const App = () => {
     <BrowserRouter>
       <UserContextProvider>
         <CartContextProvider>
-          <AnimatedRoutes/>   
+          <OrderContextProvider>
+            <AnimatedRoutes/>   
+          </OrderContextProvider>
         </CartContextProvider>
       </UserContextProvider>
     </BrowserRouter>
