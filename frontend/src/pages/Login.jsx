@@ -22,7 +22,7 @@ const Container = styled.div`
 const Wrapper = styled.div`
     /* width: 30%; */
     background-color: white;
-    padding: 30px;
+    padding: 20px;
 `
 const Title = styled.h1`
     font-style: 24px;
@@ -31,7 +31,7 @@ const Title = styled.h1`
 const Form = styled.form`
     display: flex;
     flex-direction: column;
-    min-width: 380px;
+    min-width: 280px;
 `
 const PasswordContainer = styled.div`
     position: relative;
