@@ -3,6 +3,7 @@ import Footer from '../components/Footer'
 import Navbar from '../components/Navbar'
 import Slider from '../components/Slider'
 import { motion } from 'framer-motion'
+import NewProducts from '../components/NewProducts'
 const Home = () => {
   return (
     <motion.div
@@ -12,6 +13,7 @@ const Home = () => {
     >
         <Navbar/>
         <Slider/>
+        <NewProducts/>
         <Footer/>
     </motion.div>
   )
