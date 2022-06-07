@@ -54,7 +54,7 @@ const AccountNav = ({setNavNumber}) => {
     }, [number])
 
     const logout = async () => {
-        const response = await fetch ('http://localhost:5000/auth/logout', {
+        const response = await fetch ('https://sneaker-shop-fr.herokuapp.com/auth/logout', {
             method:'DELETE',
             headers: {
                 'Content-Type':'application/json',

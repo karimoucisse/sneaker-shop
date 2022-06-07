@@ -5,7 +5,8 @@ const UserContext = createContext({})
 const UserContextProvider = props => {
     const [user, setUser] = useState(null)
 
-    const API = "http://localhost:5000/auth/me"
+    // const API = "http://localhost:5000/auth/me"
+    const API = "https://sneaker-shop-fr.herokuapp.com/"
 
     useEffect(() => {
         getUser() 

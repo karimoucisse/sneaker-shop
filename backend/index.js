@@ -7,11 +7,7 @@ const passport = require('./config/passport')
 const cors = require('cors')
 const expressSession = require('express-session')
 
-// require('./routes/auth')
-// require('./routes/cart')
-// require('./routes/order')
-// require('./routes/products')
-// require('./routes/user')
+
 
 const authRoute = require('./routes/auth')
 const cartRoute = require('./routes/cart')
@@ -46,8 +42,12 @@ app.use('/products', productsRoute)
 app.use('/user', userRoute)
 app.use('/payment', stripeRoute)
 
-
-
+// TELLING TO HERUKU WHICH FOLDER WE WILL FOR AUR STATIC WEB SITE
+app.use(express.static(path.join(__dirname, "/frontend/build")));
+//tELLING HEROKU WHICH FILES  TO CREATE AND DISPLAY
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '/frontend/build', 'index.html'));
+});
 
 app.listen(port, () => {
     console.log(`Serveur is running on port ${port}`);

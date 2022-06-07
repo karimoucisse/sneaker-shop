@@ -28,7 +28,7 @@ const NewProducts = () => {
     }, [products])
 
     const getProducts = async () => {
-        const response = await fetch(`http://localhost:5000/products?new=true`, {
+        const response = await fetch(`https://sneaker-shop-fr.herokuapp.com/products?new=true`, {
             credentials: 'include',
         })
         
