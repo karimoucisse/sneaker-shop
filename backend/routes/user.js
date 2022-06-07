@@ -5,7 +5,7 @@ const bcrypt = require('bcrypt')
 const { isAdmin } = require('../middlewares/isAdmin')
 
 //GET ALL USER
-app.get('/', isAdmin, async (req,res) => {
+app.get('/', async (req,res) => {
     try {
         const users = await Users.find()
         .exec()

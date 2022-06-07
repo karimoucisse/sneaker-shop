@@ -64,7 +64,7 @@ app.get('/', async (req, res) => {
         let products;
         if(qNew) {
             // SORT LATEST PRODUCT
-            products = await Product.find().sort({createdAt: -1}).limit(1)
+            products = await Product.find().sort({createdAt: -1}).limit(4)
         } else if (qCategory) {
             // SORT PRODUCT BY CATEGORY
             products = await Product.find({categories: qCategory})

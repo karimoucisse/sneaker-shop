@@ -4,8 +4,8 @@ const OrderSchema = mongoose.Schema({
     userId: {type: String, required: true},
     products: [
         {
-            productId:{ 
-                type: String
+            product: { 
+                type: Array, required: true
             },
             quantity: {
                 type: Number, default: 1
@@ -14,9 +14,7 @@ const OrderSchema = mongoose.Schema({
     ],
     amount: {type: Number, required: true},
     address: {type: Object, required: true},
-    status: {type: String, default: "pending"},
-    paymentMethod: {type: String, required: true, default: "Paypal"}
-
+    status: {type: String, default: "pending"}
 },{
     timestamps: true
 })

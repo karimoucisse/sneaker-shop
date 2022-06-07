@@ -6,7 +6,7 @@ const { isAdmin } = require('../middlewares/isAdmin')
 app.post('/', async (req, res) => {
     const neworder = new Order (req.body)
     try {
-        const saveOrder = await neworder.save()
+        const savedOrder = await neworder.save()
         res.status(200).json(savedOrder)   
     } catch (err) {
         res.status(500).json(err)
@@ -46,8 +46,8 @@ app.get('/:userId', async (req, res) => {
     const {userId} = req.params
     try {
         const orders = await Order.find({userId: userId})
-        .exec()
-        res.json(orders)
+        // .exec()
+        res.status(200).json(orders)
     } catch (err) {
         console.log(err)
         res.status(500).json(err)

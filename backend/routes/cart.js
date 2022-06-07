@@ -18,13 +18,14 @@ app.post('/', async (req, res) => {
 app.put('/:id', async (req, res) => {
     const { id } = req.params
     try {
-        const modifyCart = await Cart.findByIdAndUpdate(
+        const modifyCart = await Cart.findOneAndUpdate(
             {_id: id},
             {...req.body},
             {new: true}
         )
-            .exec()
+            // .exec()
         res.json(modifyCart)
+        console.log(req.body);
     } catch (err) {
         console.log(err)
         res.status(500).json(err)
@@ -43,19 +44,22 @@ app.delete('/:id', async (req, res) => {
 })
 
 // GET USER CART
-app.get('/:userId', async (req, res) => {
-    const { userId } = req.params
+app.get('/:id', async (req, res) => {
+    const {id} = req.params
     try {
-        const cart = await Cart.findOne({userId: userId})
-        .exec()
+        const cart = await Cart.findById(id)
+        // .exec()
         res.json(cart)
     } catch (err) {
+        console.log(err)
         res.status(500).json(err)
     }
 })
 
+
+
 // GET ALL CART
-app.get('/', isAdmin, async (rec, res) => {
+app.get('/', async (rec, res) => {
     try {
         const carts = await Cart.find()
         res.status(200).json(carts)

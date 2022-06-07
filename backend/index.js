@@ -7,12 +7,18 @@ const passport = require('./config/passport')
 const cors = require('cors')
 const expressSession = require('express-session')
 
+// require('./routes/auth')
+// require('./routes/cart')
+// require('./routes/order')
+// require('./routes/products')
+// require('./routes/user')
 
 const authRoute = require('./routes/auth')
 const cartRoute = require('./routes/cart')
 const orderRoute = require('./routes/order')
 const productsRoute = require('./routes/products')
 const userRoute = require('./routes/user')
+const stripeRoute = require('./routes/stripe')
 
 mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('Connection to MongoDB successful !'))
@@ -38,6 +44,7 @@ app.use('/cart', cartRoute)
 app.use('/order', orderRoute)
 app.use('/products', productsRoute)
 app.use('/user', userRoute)
+app.use('/payment', stripeRoute)
 
 
 
