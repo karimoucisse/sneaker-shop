@@ -10,6 +10,9 @@ const Container = styled.div`
     flex: 1;
     display: flex;
     justify-content: center;
+    @media (max-width: 870px) {
+        margin-top: 40px;
+    }
 `
 const Card = styled.div`
     background-color: #ffff;
@@ -20,6 +23,10 @@ const Card = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
+
+    @media (max-width: 870px) {
+        min-width: 250px;
+    }
 `
 const Title = styled.h2`
     text-align: center;

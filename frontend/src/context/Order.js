@@ -9,6 +9,12 @@ const OrderContextProvider = props => {
 
     const API = "http://localhost:5000/order"
 
+    useEffect(() => {
+        if(user) {
+            getOrders()
+        }
+    }, [user])
+
     const getOrders = async () => {
         const response = await fetch(`${API}/${user._id}`, {
             credentials: 'include'
@@ -32,15 +38,13 @@ const OrderContextProvider = props => {
         if(response.status >= 400) {
             console.log("error");
         } else {
-            // console.log("success");
             const data = await response.json()
-            setOrder(data)
         }
 
     }
 
     const value = {
-        order,                                 
+        order: order,                                 
         setOrder,
         getOrders,
         createOrder

@@ -11,19 +11,34 @@ import { UserContext } from "../context/User";
 const Wrapper = styled.div`
     display: flex;
     padding: 40px;
+    @media (max-width: 930px) {
+        flex-direction: column;
+    }
+    @media (max-width: 521px) {
+        padding: 0px;
+    }
 `
 const Left = styled.div`
     flex: 1;
+    @media (max-width: 930px) {
+        margin-bottom: 20px;
+    }
 `
 const Image = styled.img`
     width: 100%;
     height: 90vh;
     object-fit: cover ;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+    @media (max-width: 445px) {
+        height: 50vh;
+    }
 `
 const Right = styled.div`
     flex: 1;
     padding: 0 50px;
+    @media (max-width: 445px) {
+        padding: 0 20px;
+    }
 `
 const Title = styled.h1`
     font-weight: 300;
@@ -83,6 +98,11 @@ const FilterSize = styled.div`
         background-color: ${(props) => props.number && '#212A2F'};
         color: white;
     }
+
+    @media (max-width: 377px) {
+        margin-left: 0;
+    }
+    
 `
 
 const Button = styled.button`
@@ -147,9 +167,16 @@ const Product = () => {
             ...products,
             content
         ]
-        modifyCart(cart._id, products)   
-        console.log("add into cart");
+        modifyCart(cart._id, products)  
+        // const timer = setTimeout(() => {
+        //     console.log('This will run after 1 second!')
+        //     return () => clearTimeout(timer);
+        // }, 1000);
+        // timer()
+        // console.log('second logggggggggggggggg'); 
     }
+
+   
 
     const onSizeClick = (item) => {
         for(let i = 0; i < product.size.length; i++) {

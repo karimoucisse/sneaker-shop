@@ -36,7 +36,6 @@ const Top = styled.div`
     padding: 0 5px 0 14px;
 `
 const DeleteContainer = styled(DeleteOutlineOutlinedIcon)`
-    /* color: red; */
     cursor: pointer;
     &:hover {
         transform: scale(1.02);
@@ -52,26 +51,9 @@ const Paragraph = styled.p`
     font-size: 16px;
     margin-bottom: 5px;
 `
-// const Bottom = styled.div`
 
-// `
-// const Select = styled.select`
-//     padding: 5px 20px;
-//     font-size: 18px;
-//     cursor: pointer;
-//     outline: none;
-//     border: 0.5px solid ;
-// `
-// const Option = styled.option`
-//     font-size: 18px;
-// `
 const BasketItems = ({item, index}) => {
     const {cart, modifyCart} = useContext(CartContext)
-    // const {cartProducts, setCartProducts} = useState()
-
-    useEffect(() => {
-        // console.log("cart" + index);
-    }, [cart])
 
     const onDeleteClick = () => {
         const cartProducts = cart.products
@@ -100,17 +82,6 @@ const BasketItems = ({item, index}) => {
                 </div>
                 <DeleteContainer onClick={() => onDeleteClick()}/>
             </Top>
-            {/* <Bottom>
-                <Select>
-                    <Option>40</Option>
-                    <Option>41</Option>
-                    <Option>42</Option>
-                    <Option>43</Option>
-                    <Option>44</Option>
-                    <Option>45</Option>
-                    <Option>46</Option>
-                </Select>
-            </Bottom> */}
         </Right>
     </Container>
   )

@@ -13,6 +13,9 @@ const Title = styled.h1`
 const FilterContainer = styled.div`
     display: flex;
     justify-content: space-between;
+    @media (max-width: 371px) {
+        flex-direction: column;
+    }
 `
 const Filter = styled.div`
     margin: 20px;
@@ -38,8 +41,6 @@ const ProductsList = () => {
     
     useEffect(() => {
         getProducts()
-        console.log(id);
-        // console.log('proddd: ' + products);
     }, [id])
 
     const getProducts = async () => {

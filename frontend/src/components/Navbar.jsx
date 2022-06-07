@@ -146,7 +146,7 @@ const Navbar = () => {
 
     const isBigScreen = useMediaQuery({ query: '(min-width: 815px)' })
     const isTabletOrMobile = useMediaQuery({ query: '(max-width: 815px)' })
-    console.log(isActive);
+    
     if(!cart) {
         return null
     }

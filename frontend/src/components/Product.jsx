@@ -19,6 +19,10 @@ const Container = styled(Link)`
     &:hover {
         transform: scale(1.007);
     }
+    @media (max-width: 473px) {
+        margin: 10px 0;
+    }
+    
 `
 const Image = styled.img`
     border-radius: 10px 10px 0 0;

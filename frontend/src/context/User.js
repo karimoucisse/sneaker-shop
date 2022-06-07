@@ -24,8 +24,7 @@ const UserContextProvider = props => {
     
     const value = {
         user: user,
-        setUser: setUser,
-        getUser
+        setUser: setUser   
     }
     
     return (

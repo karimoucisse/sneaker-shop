@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components"
 import { useNavigate } from 'react-router';
 import { useContext } from "react";
@@ -8,10 +8,15 @@ const Container = styled.div`
     /* flex: 1; */
     padding: 20px 0;
     /* width: 300px; */
-    height: 70vh;
+    /* height: 70vh; */
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    /* justify-content: center; */
+    @media (max-width: 770px) {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
    
 `
 const Paragraph = styled.div`
@@ -26,14 +31,27 @@ const Paragraph = styled.div`
         color: #ffff;
     }
     &:nth-child(${(props) => props.number}) {
-        background-color: ${(props) => props.number === 6 ? 'red' : '#212A2F'};
+        background-color: ${(props) => props.number == 6 ? 'red !important' : '#212A2F'};
         color: white;
     }
+    @media (max-width: 770px) {
+        /* max-height: 70px; */
+        display: flex;
+        align-items: center;
+        /* padding: 20px 0px; */
+        width: 300px;
+        /* flex: 1; */
+        text-align: center;
+    }
 `
-const AccountNav = () => {
+const AccountNav = ({setNavNumber}) => {
     const [number, setNumber] = useState(1)
     const navigate = useNavigate()
     const {setUser} = useContext(UserContext)
+
+    useEffect(() => {
+        setNavNumber(number)
+    }, [number])
 
     const logout = async () => {
         const response = await fetch ('http://localhost:5000/auth/logout', {

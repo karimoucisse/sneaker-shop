@@ -20,9 +20,19 @@ const Container = styled.div`
     display: flex;
     padding: 60px 50px;
     min-height: 70vh;
+    @media (max-width: 870px) {
+        flex-direction: column;
+        align-items: center;
+    }
+    @media (max-width: 500px) {
+        padding: 60px 10px;
+    }
 `
 const Left = styled.div`
     flex: 1;
+    @media (max-width: 870px) {
+        width: 100%;
+    }
 `
 const EmptyTitle = styled.p`
     display: flex;
