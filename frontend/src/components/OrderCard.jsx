@@ -19,7 +19,7 @@ const OrderCard = ({item}) => {
         ))}
         <p>Adress de livraison : {item.address}</p>
         <p>Prix Total: {item.amount}€</p>
-        <p>Date du commande: {moment(item.createdAt).format('L')}</p>
+        <p>Date du commande: {moment(item.createdAt).format('LLL')}</p>
         <p>Status : {item.status === "pending" ? "en cours de livraison" : "terminer" }</p>
     </Container>
   )

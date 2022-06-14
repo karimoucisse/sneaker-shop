@@ -31,7 +31,7 @@ const Paragraph = styled.div`
         color: #ffff;
     }
     &:nth-child(${(props) => props.number}) {
-        background-color: ${(props) => props.number == 6 ? 'red !important' : '#212A2F'};
+        background-color: #212A2F;
         color: white;
     }
     @media (max-width: 770px) {

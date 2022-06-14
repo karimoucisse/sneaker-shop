@@ -155,7 +155,7 @@ const Signup = () => {
     })
 
     const signup = async values => {
-        const response = await fetch ('https://sneaker-shop-fr.herokuapp.com/auth/signup', {
+        const response = await fetch ('http://localhost:5000/auth/signup', {
             method: 'post',
             headers: {
                 'content-type': 'application/json',

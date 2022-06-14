@@ -5,7 +5,34 @@ const bcrypt = require('bcrypt')
 const passport = require('../config/passport')
 const {isSameEmail} = require('../middlewares/sameEmail')
 
-// ALLOW USER TO SIGNUP
+
+// ALLOW USER TO LOGIN
+
+// sur la route POST `/login`, on utilise la stratégie locale en stratégie qui va nous permettre
+// de stocker un user en session sur le serveur
+
+app.post("/login", passport.authenticate("local"), (req, res) => {
+    
+    // si le user existe (il est maintenant dans `req.user`,
+	// on utilise `req.logIn`, qui nous vient de passport pour stocker la session
+	// du user. Et je renvoie le user au client (postman ou mon navigateur).
+    if(req.user) {
+        req.logIn(req.user, async err => {
+            if(err) {
+                console.log(err);
+            }else {
+                const user = await User.findOne({_id: req.user._id})
+                    .lean()
+                    .exec()
+                res.json(user)
+            }
+        })
+    }
+})
+
+
+
+
 app.post("/signup", isSameEmail, (req, res) => {
     bcrypt.hash(req.body.password, 10)
         .then(hash => {
@@ -23,22 +50,6 @@ app.post("/signup", isSameEmail, (req, res) => {
         .catch(error => res.status(500).json({ error }))
 })
 
-// ALLOW USER TO LOGIN
-app.post("/login", passport.authenticate("local"), (req, res) => {
-    // console.log(req.user);
-    if(req.user) {
-        req.logIn(req.user, async err => {
-            if(err) {
-                console.log(err);
-            }else {
-                const user = await User.findOne({_id: req.user._id})
-                    .lean()
-                    .exec()
-                res.json(user)
-            }
-        })
-    }
-})
 
 app.get('/me', async (req, res) => {
     if (req.user) {

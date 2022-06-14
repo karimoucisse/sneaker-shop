@@ -116,7 +116,7 @@ const TotalCard = () => {
     
     useEffect(() => {
         const stripeRequest = async () => {
-            const response = await fetch ('https://sneaker-shop-fr.herokuapp.com/payment', {
+            const response = await fetch ('http://localhost:5000/payment', {
                 method: 'post',
                 headers: {
                     'Content-Type': 'application/json',

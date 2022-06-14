@@ -7,8 +7,8 @@ const CartContextProvider = props => {
     const {user} = useContext(UserContext)
     const [cart, setCart] = useState()
 
-    // const API = "http://localhost:5000/cart"
-    const API = "https://sneaker-shop-fr.herokuapp.com/"
+    const API = "http://localhost:5000/cart"
+    // const API = "https://sneaker-shop-fr.herokuapp.com/"
 
     useEffect(() => {
         if(localStorage.getItem("id")) {
