@@ -1,25 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import {BrowserRouter, Routes, Route} from "react-router-dom"
+import { UserContextProvider } from "./context/User"
+import { ProductContextProvider } from "./context/Product"
+import { OrderContextProvider } from "./context/Order"
+import Home from "./pages/Home"
+import User from "./pages/User"
+import Users from "./pages/Users"
+import Product from "./pages/Product"
+import ProductList from "./pages/ProductList"
+import NewUser from "./pages/NewUser"
+import NewProduct from "./pages/NewProduct"
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <BrowserRouter>
+    <UserContextProvider>
+      <OrderContextProvider>
+        <ProductContextProvider>
+          <Routes>
+            <Route exact path = "/" element= {<Home/>}/>
+            <Route exact path = "/user/:id" element= {<User/>}/>
+            <Route exact path = "/users" element= {<Users/>}/>
+            <Route exact path = "/new-user" element= {<NewUser/>}/>
+            <Route exact path = "/product/:id" element= {<Product/>}/>
+            <Route exact path = "/products" element= {<ProductList/>}/>
+            <Route exact path = "/new-product" element= {<NewProduct/>}/>
+          </Routes>
+        </ProductContextProvider>
+      </OrderContextProvider>
+    </UserContextProvider>
+    </BrowserRouter>
+    )
 }
 
-export default App;
+export default App
