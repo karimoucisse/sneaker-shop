@@ -1,8 +1,9 @@
 import styled from "styled-components"
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import { useContext, useState } from "react";
+import { UserContext } from "../context/User";
 import { useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import Navbar from "../components/Navbar";
@@ -118,6 +119,7 @@ const ErrorMessage = styled.p`
 const Signup = () => {
     const navigate = useNavigate()
     const [isHidden, setIsHidden] = useState(true)
+    const {getUser} = useContext(UserContext)
 
     const formik = useFormik({
         initialValues: {
@@ -144,7 +146,7 @@ const Signup = () => {
             .email("Email est incorrecte")
             .required("email est requis"),
             password: Yup.string()
-            .min(6, "Mot de passe trop court")
+            .min(8, "Mot de passe trop court")
             .required("mot de passe requis"),
             phoneNumber: Yup.string()
             .required("numero de telephone requis"),
@@ -164,16 +166,15 @@ const Signup = () => {
             body: JSON.stringify(values)
         })
 
-        // if(response.status >= 400) {
-        //     alert("Error")
-        // }else {
-        //     const userCreation = await response.json()
-        //     const user = await log
-        // }
+        if(response.status >= 400) {
+            console.log("Error")
+        }else {
+            navigate('/')
+        }
     }
     return (
         <motion.Container
-            initial= {{ oapcity: 0 }}
+            initial= {{ opacity: 0 }}
             animate= {{ opacity: 1 }}
             exit= {{ opacity: 0 }}
         >
@@ -208,7 +209,7 @@ const Signup = () => {
                         />
                         {formik.errors.email && <ErrorMessage>{formik.errors.email}</ErrorMessage>}
                         <Input 
-                            placeholder= "age" 
+                            placeholder= "Date de naissance" 
                             type= "text"
                             name= "birthDate"
                             value= {formik.values.birthDate}

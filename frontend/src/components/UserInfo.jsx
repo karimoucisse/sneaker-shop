@@ -2,6 +2,9 @@ import styled from "styled-components"
 import { UserContext } from "../context/User";
 import { useContext, useState } from "react";
 import moment from "moment";
+import { useFormik } from 'formik'
+import * as Yup from 'yup'
+import { useEffect } from "react";
 // moment().format();
 
 const Container = styled.div`
@@ -46,12 +49,70 @@ const Button = styled.button`
     }
 `
 const UserInfo = () => {
-    const {user} = useContext(UserContext)
+    const {user, getUser} = useContext(UserContext)
     const [modification, setModification] = useState(false)
 
-    const inputValue = (e) => {
-        console.log(e.target);
+    // useEffect(() => {
+    //     getUser()
+    // }, [user])
+
+    const formik = useFormik({
+        initialValues: {
+            firstName: "",
+            lastName: "",
+            email: "",
+            password: "",
+            phoneNumber: "",
+            adress: "",
+            birthDate: "",          
+        },
+        onSubmit: (e, values) => {
+            modifyUser(values)
+            console.log(values);
+        },
+        validateOnChange: false,
+        validationSchema: Yup.object({
+            firstName: Yup.string()
+            .required("Le prénom est requis"),
+            lastName: Yup.string()
+            .required("Le nom est requis"),
+            email: Yup.string()
+            .email("Email est incorrecte")
+            .required("email est requis"),
+            password: Yup.string()
+            .min(8, "Mot de passe trop court")
+            .required("mot de passe requis"),
+            phoneNumber: Yup.string()
+            .required("numero de telephone requis"),
+            adress: Yup.string()
+            .required("l'adresse est requis"),
+            birthDate: Yup.string()
+            .required("la date de naissance est requise"),
+            
+        })
+    })
+
+    const modifyUser = async (values) => {
+        const response = await fetch (`http://localhost:5000/user/${user._id}`, {
+            method: 'put',
+            headers: {
+                    'Content-Type': 'application/json',
+                },
+            credentials: 'include',
+            body: JSON.stringify(values)
+        })
+        if(response.status >= 400) {
+            console.log("Error")
+        } else {
+            getUser()
+            setModification(!modification)
+        }
     }
+        
+    const onButtonClick = () => {
+        setModification(!modification)
+    }
+
 
 if(!user) {
     return null
@@ -59,16 +120,64 @@ if(!user) {
   return (
     <Container>
         <Card>
-            {modification &&
-                <>
-                    <Input onChange={inputValue} defaultValue= {user.firstName}/>
-                    <Input defaultValue= {user.lastName}/>
-                    <Input defaultValue= {user.email} />
-                    <Input defaultValue= {user.password} type= "password"/>
-                    <Input defaultValue= {user.phoneNumber}/>
-                    <Input defaultValue= {user.adress}/>
-                    <Input defaultValue= {moment(user.birthDate).format('L')}/>
-                </>
+            {modification && user &&
+                <form  onSubmit={formik.handleSubmit}>
+                    <Input 
+                        placeholder= {user.firstName}
+                        type= "text"
+                        name= "firstName"
+                        value= {formik.values.firstName}
+                        onChange={formik.handleChange}
+                    />
+                    <Input 
+                        placeholder= {user.lastName}
+                        type= "text"
+                        name= "lastName"
+                        value= {formik.values.lastName}
+                        onChange={formik.handleChange}
+                    />
+                    <Input 
+                        placeholder= {user.email}
+                        type= "text"
+                        name= "email"
+                        value= {formik.values.email}
+                        onChange={formik.handleChange}
+                    />
+                    <Input 
+                        placeholder= {user.password}
+                        name= "password"
+                        value= {formik.values.password}
+                        onChange={formik.handleChange}
+                        type= "password"
+                    />
+                    <Input 
+                        placeholder= {user.phoneNumber}
+                        type= "text"
+                        name= "phoneNumber"
+                        value= {formik.values.phoneNumber}
+                        onChange={formik.handleChange}
+                    />
+                    <Input
+                        placeholder= {user.adress}
+                        type= "text"
+                        name= "adress"
+                        value= {formik.values.adress}
+                        onChange={formik.handleChange}
+                    />
+                    <Input
+                        placeholder= {user.birthDate} 
+                        type= "text"
+                        name= "birthDate"
+                        value= {formik.values.birthDate}
+                        onChange={formik.handleChange}
+                    />
+                    <Button 
+                        type="submit"
+                        // onClick={onButtonClick} 
+                    >
+                        Modifier
+                    </Button>
+                </form>
             }
             {!modification && 
                 <>
@@ -79,9 +188,13 @@ if(!user) {
                     <Paragraph><Span>Date de naissance: </Span> {moment(user.birthDate).format('L')}</Paragraph>
                 </>
             }
-            <Button onClick={() => setModification(!modification)}>
-                {modification ? "appliquer" : "Modifier"}
-            </Button>
+            {!modification && 
+                <Button 
+                    onClick={onButtonClick} 
+                >
+                    appliquer
+                </Button>
+            }
         </Card>
     </Container>
   )

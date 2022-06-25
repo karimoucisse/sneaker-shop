@@ -8,7 +8,6 @@ const OrderContextProvider = props => {
     const [order, setOrder] = useState()
 
     const API = "http://localhost:5000/order"
-    // const API = "https://sneaker-shop-fr.herokuapp.com/"
 
     useEffect(() => {
         if(user) {

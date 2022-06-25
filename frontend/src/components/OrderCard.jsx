@@ -11,7 +11,7 @@ const Container = styled.div`
 `
 
 const OrderCard = ({item}) => {
-    console.log('order: ' + item);
+
   return (
     <Container>
         {item.products.map(product => (

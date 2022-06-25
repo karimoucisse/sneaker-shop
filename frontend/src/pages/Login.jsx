@@ -9,6 +9,7 @@ import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import Navbar from "../components/Navbar";
 import { motion } from 'framer-motion'
+import { CartContext } from "../context/Cart";
 
 const Container = styled.div`
     width: 100vw;
@@ -106,13 +107,13 @@ const Login = () => {
     const navigate = useNavigate()
     const [isHidden, setIsHidden] = useState(true)
     const {setUser} = useContext(UserContext)
+    const {onLogin} = useContext(CartContext)
 
     const formik = useFormik({
         initialValues: {
             email: "karimou.cisse@gmail.com",
             password: "Karimou1234",
         },
-
         onSubmit: async values => {
             login(values)
         },
@@ -142,6 +143,7 @@ const Login = () => {
         } else {
             const userLogged = await response.json()
             setUser(userLogged)
+            onLogin()
             navigate('/')
         }
     }
@@ -178,7 +180,7 @@ const Login = () => {
                             : <OpenEyeIcon onClick={() => setIsHidden(true)}/>
                         }
                     </PasswordContainer>
-                    <Button>SE CONNECTER</Button>
+                    <Button type= "submit">SE CONNECTER</Button>
                     <Linker to ="/">Mot de passe oublié</Linker>
                     <Paragraph>Vous n'êtes pas encore membre ?<Linker to= "/signup">Rejoignez-nous.</Linker></Paragraph>
                 </Form>

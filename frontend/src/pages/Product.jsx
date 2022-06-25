@@ -6,11 +6,14 @@ import { useParams } from 'react-router-dom';
 import { motion } from 'framer-motion'
 import { CartContext } from "../context/Cart"
 import { UserContext } from "../context/User";
+import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
+import Loading from "../components/Loading"
 
 
 const Wrapper = styled.div`
     display: flex;
     padding: 40px;
+    position: relative;
     @media (max-width: 930px) {
         flex-direction: column;
     }
@@ -26,7 +29,8 @@ const Left = styled.div`
 `
 const Image = styled.img`
     width: 100%;
-    height: 90vh;
+    background-color: rgb(246,246,246);
+    /* height: 70vh; */
     object-fit: cover ;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
     @media (max-width: 445px) {
@@ -121,6 +125,21 @@ const Button = styled.button`
         /* transform: scale(1.001); */
     }
 `
+const SuccessContainer = styled.div`
+    position: absolute;
+    padding: 20px;
+    width: 250px;
+    display: ${props => props.success ? "flex" : "none" };
+    top: 20px; 
+    right: 20px; 
+    background-color: #e0edd9;
+    gap: 10px;
+    transition: all 0.4s ease-in-out;
+    color:#236b1d;
+`
+const Paragraph = styled.p`
+    font-weight: 700;
+`
 
 const Product = () => {
     const [product, setProduct] = useState()
@@ -128,12 +147,13 @@ const Product = () => {
     const [number, setNumber] = useState(2)
     const [typeNumber, setTypeNumber] = useState(0)
     const {id} = useParams()
-    const {cart, setCart, modifyCart} = useContext(CartContext)
+    const {cart, modifyCart, products} = useContext(CartContext)
     const {user} = useContext(UserContext)
+    const [success, setSuccess] = useState(false)
 
     useEffect(() => {
         getProduct()
-    }, [])
+    }, [cart])
 
     const getProduct = async () => {
         const response = await fetch(`http://localhost:5000/products/${id}`, {
@@ -154,7 +174,7 @@ const Product = () => {
     }
     
     const onAddBasketButtonClick = () => {
-        let products = cart.products
+
         const content ={
             product : {
                 name: product.name,
@@ -163,19 +183,38 @@ const Product = () => {
                 type: product.types[typeNumber],
             }
         }  
-        products = [
-            ...products,
-            content
-        ]
-        modifyCart(cart._id, products)  
-        // const timer = setTimeout(() => {
-        //     console.log('This will run after 1 second!')
-        //     return () => clearTimeout(timer);
-        // }, 1000);
-        // timer()
-        // console.log('second logggggggggggggggg'); 
+        if(!user) {
+            if(localStorage.getItem("products")) {
+                let LocalStotageProducts = products
+    
+                LocalStotageProducts = [content, ...LocalStotageProducts]
+                console.log(LocalStotageProducts);
+                localStorage.setItem('products', JSON.stringify(LocalStotageProducts))
+            } else {
+                localStorage.setItem('products', JSON.stringify([content]))
+            }
+        } else {
+            let cartProducts = cart.products
+            if(cartProducts.length === 0) {
+                cartProducts = [
+                    content
+                ]
+            } else {
+                cartProducts = [
+                    content,
+                    ...cartProducts
+                ]
+            }
+            modifyCart(cart._id, cartProducts)
+        }
+ 
+        setTimeout(myTimeout, 3000);
+        setSuccess(true)
     }
 
+    const myTimeout = () => {
+        setSuccess(false)
+    }
    
 
     const onSizeClick = (item) => {
@@ -187,7 +226,7 @@ const Product = () => {
     }
 
     if(!product) {
-        return null
+        return <Loading/>
     }
     
   return (
@@ -224,6 +263,10 @@ const Product = () => {
                 </FilterContainer>
                 <Button onClick={() => onAddBasketButtonClick ()}>Ajouter au panier</Button>
             </Right>
+            <SuccessContainer success= {success}>
+                <CheckCircleOutlineOutlinedIcon/>
+                <Paragraph>Ajouter au panier</Paragraph>
+            </SuccessContainer>
         </Wrapper>
         <Footer/>
     </motion.div>

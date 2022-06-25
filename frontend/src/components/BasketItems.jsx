@@ -2,6 +2,7 @@ import styled from "styled-components"
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import { useContext, useEffect, useState } from "react"
 import { CartContext } from "../context/Cart"
+import Loading from "./Loading";
 
 const Container = styled.div`
     max-width: 600px;
@@ -53,36 +54,79 @@ const Paragraph = styled.p`
 `
 
 const BasketItems = ({item, index}) => {
-    const {cart, modifyCart} = useContext(CartContext)
+    const {cart, modifyCart, products} = useContext(CartContext)
+
+    useEffect(() => {
+        console.log("item: " + item);
+    }, [])
 
     const onDeleteClick = () => {
-        const cartProducts = cart.products
-        cartProducts.splice(index, 1)
-        modifyCart(cart._id, cartProducts);
+        if(products) {
+            if(products.length > 1) {
+                // let products = JSON.parse(localStorage.getItem('products'))
+                products.splice(index, 1)
+                console.log(products);
+                // localStorage.removeItem('products')
+                localStorage.setItem('products', JSON.stringify(products))
+            } else {
+                localStorage.removeItem('products')
+            }
+        }
+        if(cart) {
+            const cartProducts = cart.products
+            cartProducts.splice(index, 1)
+            modifyCart(cart._id, cartProducts);
+        }
     }
 
-    if(!cart) {
-        return null
-    }
-    if(!item) {
-        return null
-    }
+
+
+
+    // if(!cart) {
+    //     return <Loading/>
+    // }
+    // if(!item) {
+    //     return null
+    // }
+
   return (
     <Container>
-        <Left>
-            <Image src= {item.product[0].type.image} />
-        </Left>
-        <Right>
-            <Top>
-                <div>
-                    <Title>{item.product[0].name}</Title>
-                    <Paragraph>Prix: {item.product[0].price}€</Paragraph>
-                    <Paragraph>Couleur: {item.product[0].type.color}</Paragraph>
-                    <Paragraph>Taille: {item.product[0].size}cm</Paragraph>
-                </div>
-                <DeleteContainer onClick={() => onDeleteClick()}/>
-            </Top>
-        </Right>
+        {products &&
+        <>
+            <Left>
+                <Image src= {item.product.type.image} />
+            </Left>
+            <Right>
+                <Top>
+                    <div>
+                        <Title>{item.product.name}</Title>
+                        <Paragraph>Prix: {item.product.price}€</Paragraph>
+                        <Paragraph>Couleur: {item.product.color}</Paragraph>
+                        <Paragraph>Taille: {item.product.size}</Paragraph>
+                    </div>
+                    <DeleteContainer onClick={() => onDeleteClick()}/>
+                </Top>
+            </Right>
+        </>
+        }
+        {cart && 
+        <>
+            <Left>
+                <Image src= {item.product[0].type.image} />
+            </Left>
+            <Right>
+                <Top>
+                    <div>
+                        <Title>{item.product[0].name}</Title>
+                        <Paragraph>Prix: {item.product[0].price}€</Paragraph>
+                        <Paragraph>Couleur: {item.product[0].type.color}</Paragraph>
+                        <Paragraph>Taille: {item.product[0].size}cm</Paragraph>
+                    </div>
+                    <DeleteContainer onClick={() => onDeleteClick()}/>
+                </Top>
+            </Right>
+        </>
+        }
     </Container>
   )
 }

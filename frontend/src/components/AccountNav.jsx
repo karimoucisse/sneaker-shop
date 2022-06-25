@@ -3,6 +3,7 @@ import styled from "styled-components"
 import { useNavigate } from 'react-router';
 import { useContext } from "react";
 import { UserContext } from "../context/User";
+import { CartContext } from "../context/Cart";
 
 const Container = styled.div`
     /* flex: 1; */
@@ -26,8 +27,7 @@ const Paragraph = styled.div`
     font-weight: 600;
     font-size: 20px;
     &:hover {
-        transform: scale(1.01);
-        background-color: ${(props) => props.number === 6 ? 'red' : '#212A2F'};
+        background-color: #212A2F;
         color: #ffff;
     }
     &:nth-child(${(props) => props.number}) {
@@ -42,19 +42,20 @@ const Paragraph = styled.div`
         width: 300px;
         /* flex: 1; */
         text-align: center;
-    }
+    } 
 `
 const AccountNav = ({setNavNumber}) => {
     const [number, setNumber] = useState(1)
     const navigate = useNavigate()
     const {setUser} = useContext(UserContext)
+    const {setCart} = useContext(CartContext)
 
     useEffect(() => {
         setNavNumber(number)
     }, [number])
 
     const logout = async () => {
-        const response = await fetch ('https://sneaker-shop-fr.herokuapp.com/auth/logout', {
+        const response = await fetch ('http://localhost:5000/auth/logout', {
             method:'DELETE',
             headers: {
                 'Content-Type':'application/json',
@@ -64,11 +65,12 @@ const AccountNav = ({setNavNumber}) => {
             // body: JSON.stringify(values)
         })
         setUser(null)
+        setCart(null)
         navigate('/')
     }
     const onParagraphClick = (number) =>{
         setNumber(number)
-        if(number === 6) {
+        if(number == 6) {
             logout()
         }
     }

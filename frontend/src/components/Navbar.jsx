@@ -4,7 +4,7 @@ import Badge from '@mui/material/Badge';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { useNavigate } from "react-router-dom";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../context/User";
 import { CartContext } from "../context/Cart"
 import { useMediaQuery } from 'react-responsive'
@@ -140,16 +140,17 @@ const ListElement = styled(Link)`
 `
 const Navbar = () => {
     const {user} = useContext(UserContext)
-    const {cart} = useContext(CartContext)
     const navigate = useNavigate()
+    const {products, setProducts, cart} = useContext(CartContext)
     const [isActive, setIsActive] = useState(false)
 
     const isBigScreen = useMediaQuery({ query: '(min-width: 815px)' })
     const isTabletOrMobile = useMediaQuery({ query: '(max-width: 815px)' })
     
-    if(!cart) {
-        return null
-    }
+    useEffect(() => {
+        setProducts(JSON.parse(localStorage.getItem('products')))
+    }, [cart])
+   
   return (
     <Container>
         <SubContainer>
@@ -172,9 +173,21 @@ const Navbar = () => {
                         }
                         {user && <MenuItem to= "/my-account"><AccountCircleIcon/></MenuItem>}
                         <BadgeContainer to= '/basket'>
-                            <Badge badgeContent={cart.products.length} color="primary">
-                                <ShoppingCartIcon color="action" />
-                            </Badge>
+                            {cart &&
+                                <Badge 
+                                    badgeContent={cart ? cart.products.length : 0} color="primary"
+                                >
+                                    <ShoppingCartIcon color="action" />
+                                </Badge>
+                        
+                            }
+                            {products && 
+                                <Badge 
+                                    badgeContent={products ? products.length : 0} color="primary"
+                                >
+                                    <ShoppingCartIcon color="action" />
+                                </Badge>
+                            }
                         </BadgeContainer>
                         
                     </Right>
@@ -183,9 +196,21 @@ const Navbar = () => {
             {isTabletOrMobile && 
                 <>
                     <BadgeContainer to= '/basket'>
-                        <Badge badgeContent={cart.products.length} color="primary">
-                            <ShoppingCartIcon color="action" />
-                        </Badge>
+                        {cart &&
+                            <Badge 
+                                badgeContent={cart ? cart.products.length : 0} color="primary"
+                            >
+                                <ShoppingCartIcon color="action" />
+                            </Badge>
+                    
+                        }
+                        {products && 
+                            <Badge 
+                                badgeContent={products ? products.length : 0} color="primary"
+                            >
+                                <ShoppingCartIcon color="action" />
+                            </Badge>
+                        }
                     </BadgeContainer>
                     <MenuButton onClick={() => setIsActive(!isActive)}>
                         <MenuBar isActive = {isActive}></MenuBar>

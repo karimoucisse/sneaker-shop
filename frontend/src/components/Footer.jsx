@@ -9,7 +9,7 @@ import PhoneIcon from '@mui/icons-material/Phone';
 import EmailIcon from '@mui/icons-material/Email';
 import { useMediaQuery } from 'react-responsive'
 
-const Container = styled.div`
+const Container = styled.footer`
     display: flex;
     background-color: #212a2f;
     color: white;

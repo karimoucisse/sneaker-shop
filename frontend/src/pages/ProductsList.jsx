@@ -5,6 +5,7 @@ import Footer from "../components/Footer"
 import Navbar from "../components/Navbar"
 import Products from "../components/Products"
 import { motion } from 'framer-motion'
+import Loading from "../components/Loading"
 
 
 const Title = styled.h1`
@@ -52,9 +53,9 @@ const ProductsList = () => {
         setProducts(data)
     }
     if(!products) {
-        return null
+        return <Loading/>
     }
-    
+
   return (
     <motion.div
         initial= {{ width: 0 }}
@@ -62,7 +63,8 @@ const ProductsList = () => {
         exit= {{ x: window.innerWidth, transition: {duration: 0.3} }}
     >
         <Navbar/>
-        <Title>{id}</Title>
+        {id === "Man" && <Title>Homme</Title>}
+        {id === "Woman" && <Title>Femme</Title>}
         <FilterContainer>
             <Filter>
                 <FilterText>Filter brands: </FilterText>

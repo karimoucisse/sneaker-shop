@@ -97,14 +97,23 @@ const TotalCard = () => {
 
     const newOrder = {
         userId: user ? user._id : null,
-        products: cart.products,
+        products: cart ? cart.products : JSON.parse(localStorage.getItem('products')),
         amount: finalTotal,
         address: user ? user.adress : null,
     }
     useEffect(() => {
         let total = 0
-        for (let i = 0; i < cart.products.length ; i++) {
-            total += cart.products[i].product[0].price
+        if(JSON.parse(localStorage.getItem('products'))) {
+            let products = JSON.parse(localStorage.getItem('products'))
+            for (let i = 0; i < products.length ; i++) {
+                total += products[i].product.price
+            }
+        }
+
+        if(cart) {
+            for (let i = 0; i < cart.products.length ; i++) {
+                total += cart.products[i].product[0].price
+            }
         }
         setTotalPrice(total)
     }, [cart])
@@ -135,17 +144,18 @@ const TotalCard = () => {
         }
         if(stripeToken) {
             stripeRequest()
-            modifyCart(cart._id, [])
+            {cart ? modifyCart(cart._id, []) : localStorage.removeItem('products')}
+            
             navigate('/')
         }
     }, [stripeToken])
 
-    if(!cart) {
-        return null
-    }
-    if(!user) {
-        return null
-    }
+    // if(!cart) {
+    //     return null
+    // // }
+    // if(!user) {
+    //     return <p>no user</p>
+    // }
   return (
     <Container>
         <Card>
@@ -177,7 +187,10 @@ const TotalCard = () => {
                 stripeKey= {stripePubliKey}
                 currency="EUR"
             >
-                <ValidationBtn onClick={() => createOrder(newOrder)}>Finaliser la commande</ValidationBtn>
+                <ValidationBtn 
+                    onClick={() => createOrder(newOrder)}
+                    disabled = {!user ? 1 : 0}
+                >Finaliser la commande</ValidationBtn>
             </StripeCheckout>
         </Card>
     </Container>

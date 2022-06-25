@@ -3,9 +3,10 @@ import BasketItems from "../components/BasketItems"
 import Footer from "../components/Footer"
 import Navbar from "../components/Navbar"
 import { motion } from 'framer-motion'
-import { useContext } from "react"
+import { useContext, useEffect } from "react"
 import { CartContext } from "../context/Cart"
 import TotalCard from "../components/TotalCard"
+import Loading from "../components/Loading"
 
 
 
@@ -43,11 +44,21 @@ const EmptyTitle = styled.p`
     width: 100%;
 `
 const Basket = () => {
-    const {cart} = useContext(CartContext)
+    const {products, setProducts, cart} = useContext(CartContext)
+    // const [products, setProducts] = useState() ;
 
-    if(!cart) {
-       return null
-    }
+    useEffect(() => {
+        if(!cart) {
+            setProducts(JSON.parse(localStorage.getItem('products')))
+        } 
+    }, [cart, setProducts])
+
+    // if(!cart) {
+    //    return <Loading/>
+    // }
+    // if(!products) {
+    //    return <Loading/>
+    // }
 
   return (
     <motion.div
@@ -59,17 +70,32 @@ const Basket = () => {
         <Navbar/>
         <Title>Panier</Title>
         <Container>
-            {cart.products.length > 0 && 
+            {products && products.length > 0 && 
+                <>
+                    <Left>
+                        {products.map((item, index) => 
+                            <BasketItems item = {item} index= {index} /> 
+                        )}
+                    </Left>
+                    <TotalCard />
+                </>
+            }
+
+            {cart === null && !products && 
+                <EmptyTitle>Il n'y a pas d'article dans votre panier</EmptyTitle>
+            }
+
+            {cart && cart.products.length > 0 &&
                 <>
                     <Left>
                         {cart.products.map((item, index) => 
-                            <BasketItems item = {item} index= {index} />
+                            <BasketItems item = {item} index= {index} /> 
                         )}
                     </Left>
                     <TotalCard/>
                 </>
             }
-            {cart.products.length === 0 && 
+            {cart && cart.products.length === 0 && 
                 <EmptyTitle>Il n'y a pas d'article dans votre panier</EmptyTitle>
             }
         </Container>

@@ -2,25 +2,14 @@ import styled from "styled-components"
 import { Link } from 'react-router-dom';
 
 const Container = styled(Link)`
-    flex: 1;
-    margin: 10px 20px 35px 0;
-    min-width: 300px;
-    max-width: 340px;
-    height: 330px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-color: white;
-    /* position: relative; */
-    box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 8px;
+    /* flex: 1; */
+    min-width: 100px;
+    box-shadow: 4px 4px 4px rgba(232, 227, 227, 0.7);
+    background-color: rgb(246,246,246);
     cursor: pointer;
-    border-radius: 10px;
+    transition: all 0.2s;
     &:hover {
-        transform: scale(1.007);
-    }
-    @media (max-width: 473px) {
-        margin: 10px 0;
+        transform: scale(1.01);
     }
     
 `
@@ -47,6 +36,7 @@ const Paragraph = styled.p`
     /* color: #525151; */
 `
 const Product = ({product}) => {
+    
   return (
     <Container to = {`/product/${product._id}`} onClick={() => console.log('hello word')}>
         <Image src= {product.types[0].image} />
