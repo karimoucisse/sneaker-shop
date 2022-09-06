@@ -20,7 +20,7 @@ const Container = styled.div`
     justify-content: center;
 `
 const Wrapper = styled.div`
-    width: 40%;
+    width: 450px;
     background-color: white;
     padding: 20px;
 `
@@ -30,20 +30,21 @@ const Title = styled.h1`
 `
 const Form = styled.form`
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+
 `
 const Input = styled.input`
-    flex: 1;
-    min-width: 40%;
+    /* flex: 1; */
+    min-width: 80%;
     margin: 20px 10px 0 0;
     outline: none;
     padding: 10px;
     font-size: 16px;
 `
 const PasswordContainer = styled.div`
-    flex: 1;
     font-size: 16px;
-    min-width: 40%;
+    min-width: 80%;
     margin: 20px 10px 0 0;
     position: relative;
 `
@@ -82,7 +83,7 @@ const Agreement = styled.div`
     margin: 20px 0;
 `
 const Button = styled.button`
-    margin-top: 10px;
+    margin-top: 20px;
     padding: 15px 40px;
     width: 40%;
     font-weight: 600;
@@ -98,8 +99,13 @@ const Button = styled.button`
     }
 `
 const ErrorMessage = styled.p`
-    width: 100%;
+    /* width: 100%; */
     color: red;
+    min-width: 80%;
+    margin: 0;
+    /* outline: none; */
+    padding: 0px;
+    /* font-size: 16px; */
     animation: blink 1.7s linear infinite;
     @keyframes blink {
         0% {
@@ -122,11 +128,11 @@ const Signup = () => {
         initialValues: {
             firstName:"",
             lastName: "",
-            birthDate:"",          
+            // birthDate:"",          
             email:"",
-            password:"",
-            phoneNumber:"",
-            adress:"",
+            password:""
+            // phoneNumber:"",
+            // adress:"",
         },
         onSubmit: values => {
             signup(values)
@@ -137,18 +143,18 @@ const Signup = () => {
             .required("Le prénom est requis"),
             lastName: Yup.string()
             .required("Le nom est requis"),
-            birthDate: Yup.string()
-            .required("la date de naissance est requise"),
+            // birthDate: Yup.string()
+            // .required("la date de naissance est requise"),
             email: Yup.string()
             .email("Email est incorrecte")
             .required("email est requis"),
             password: Yup.string()
             .min(8, "Mot de passe trop court")
-            .required("mot de passe requis"),
-            phoneNumber: Yup.string()
-            .required("numero de telephone requis"),
-            adress: Yup.string()
-            .required("l'adresse est requis"),
+            .required("mot de passe requis")
+            // phoneNumber: Yup.string()
+            // .required("numero de telephone requis"),
+            // adress: Yup.string()
+            // .required("l'adresse est requis"),
             
         })
     })
@@ -202,22 +208,22 @@ const Signup = () => {
                             onChange={formik.handleChange}
                         />
                         {formik.errors.email && <ErrorMessage>{formik.errors.email}</ErrorMessage>}
-                        <Input 
+                        {/* <Input 
                             placeholder= "Date de naissance" 
-                            type= "text"
+                            type= "date"
                             name= "birthDate"
                             value= {formik.values.birthDate}
                             onChange={formik.handleChange}
-                        />
-                        {formik.errors.birthDate && <ErrorMessage>{formik.errors.birthDate}</ErrorMessage>}
-                        <Input 
+                        /> */}
+                        {/* {formik.errors.birthDate && <ErrorMessage>{formik.errors.birthDate}</ErrorMessage>} */}
+                        {/* <Input 
                             placeholder= "numero"
                             type= "text"
                             name= "phoneNumber"
                             value= {formik.values.phoneNumber}
                             onChange={formik.handleChange}
                         />
-                        {formik.errors.numero && <ErrorMessage>{formik.errors.numero}</ErrorMessage>}
+                        {formik.errors.numero && <ErrorMessage>{formik.errors.numero}</ErrorMessage>} */}
                         <PasswordContainer>
                             <PasswordInput 
                                 placeholder= "mot de passe" 
@@ -233,18 +239,18 @@ const Signup = () => {
                             
                         </PasswordContainer>
                         {formik.errors.password && <ErrorMessage>{formik.errors.password}</ErrorMessage>}
-                        <Input 
+                        {/* <Input 
                             placeholder= "adresse"
                             type= "text"
                             name= "adress"
                             value= {formik.values.adress}
                             onChange={formik.handleChange}
                         />
-                        {formik.errors.adress && <ErrorMessage>{formik.errors.adress}</ErrorMessage>}
-                        <Agreement>
+                        {formik.errors.adress && <ErrorMessage>{formik.errors.adress}</ErrorMessage>} */}
+                        {/* <Agreement>
                             By creating an account, I consent to the processing of my
                             personnal data in accordance with the <b>PRIVACY POLICY</b> 
-                        </Agreement>
+                        </Agreement> */}
                         <Button type="submit">S'inscrire</Button>
                     </Form>
                 </Wrapper>
