@@ -5,7 +5,7 @@ const CartSchema = mongoose.Schema({
     products: [
         {
             product: { 
-                type: Array, required: true
+                type: Array
             },
             quantity: {
                 type: Number, default: 1

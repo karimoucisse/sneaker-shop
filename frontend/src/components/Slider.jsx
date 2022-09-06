@@ -39,15 +39,8 @@ const Slider = () => {
             modules={[Autoplay, Pagination, Navigation]}
             className="mySwiper"
         >
-            <SwiperSlide> <Img src="https://u4n2q9h4.rocketcdn.me/wp-content/images/2021/05/off-white-nike-air-force-1-low-university-gold-dd1876-700-preview-ed0.jpg.webp" /> </SwiperSlide>
-            <SwiperSlide> <Img src="https://u4n2q9h4.rocketcdn.me/wp-content/images/2021/05/off-white-nike-air-force-1-low-university-gold-dd1876-700-preview-ed0.jpg.webp" /> </SwiperSlide>
-            <SwiperSlide> <Img src="https://u4n2q9h4.rocketcdn.me/wp-content/images/2021/05/off-white-nike-air-force-1-low-university-gold-dd1876-700-preview-ed0.jpg.webp" /> </SwiperSlide>
-            <SwiperSlide> <Img src="https://u4n2q9h4.rocketcdn.me/wp-content/images/2021/05/off-white-nike-air-force-1-low-university-gold-dd1876-700-preview-ed0.jpg.webp" /> </SwiperSlide>
-            <SwiperSlide> <Img src="https://u4n2q9h4.rocketcdn.me/wp-content/images/2021/05/off-white-nike-air-force-1-low-university-gold-dd1876-700-preview-ed0.jpg.webp" /> </SwiperSlide>
-            <SwiperSlide> <Img src="https://u4n2q9h4.rocketcdn.me/wp-content/images/2021/05/off-white-nike-air-force-1-low-university-gold-dd1876-700-preview-ed0.jpg.webp" /> </SwiperSlide>
-            <SwiperSlide> <Img src="https://u4n2q9h4.rocketcdn.me/wp-content/images/2021/05/off-white-nike-air-force-1-low-university-gold-dd1876-700-preview-ed0.jpg.webp" /> </SwiperSlide>
-            <SwiperSlide> <Img src="https://u4n2q9h4.rocketcdn.me/wp-content/images/2021/05/off-white-nike-air-force-1-low-university-gold-dd1876-700-preview-ed0.jpg.webp" /> </SwiperSlide>
-            <SwiperSlide> <Img src="https://u4n2q9h4.rocketcdn.me/wp-content/images/2021/05/off-white-nike-air-force-1-low-university-gold-dd1876-700-preview-ed0.jpg.webp" /> </SwiperSlide>
+            <SwiperSlide> <Img src="https://cdn.sanity.io/images/c1chvb1i/production/253b3994cd08ab00fee704939979d7b1b3155c3d-1903x1269.jpg" /> </SwiperSlide>
+            <SwiperSlide> <Img src="https://img01.ztat.net/article/spp-media-p1/ead1b7501a9f45fa92d41ec16bb124b6/c0c296c786b64b73988cca5d40f4f2d2.jpg?imwidth=1800&filter=packshot&imformat=jpeg" /> </SwiperSlide>
         </Swiper>
     </Container>
   )

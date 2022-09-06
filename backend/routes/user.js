@@ -8,19 +8,18 @@ const { isAdmin } = require('../middlewares/isAdmin')
 app.get('/', async (req,res) => {
     try {
         const users = await Users.find()
-        .exec()
         res.json(users)
     } catch (err) {
         console.log(err)
         res.status(500).json(err)
     }
 })
+
 // GET ONE USER BY HIS ID
 app.get('/:id', async (req, res) => {
     const {id} = req.params
     try {
         const user = await Users.findById(id)
-        .exec()
         res.json(user)
     } catch (err) {
         console.log(err)
@@ -40,7 +39,6 @@ app.put('/:id', async (req, res) => {
             {...req.body, password: hash},
             {new: true}
         )
-            .exec()
             res.json(user)
     } catch (err) {
         console.log(err)

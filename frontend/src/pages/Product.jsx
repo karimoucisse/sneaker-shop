@@ -3,12 +3,10 @@ import styled from "styled-components"
 import Footer from "../components/Footer"
 import Navbar from "../components/Navbar"
 import { useParams } from 'react-router-dom';
-import { motion } from 'framer-motion'
 import { CartContext } from "../context/Cart"
 import { UserContext } from "../context/User";
 import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
 import Loading from "../components/Loading"
-
 
 const Wrapper = styled.div`
     display: flex;
@@ -30,7 +28,7 @@ const Left = styled.div`
 const Image = styled.img`
     width: 100%;
     background-color: rgb(246,246,246);
-    /* height: 70vh; */
+    height: 70vh;
     object-fit: cover ;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
     @media (max-width: 445px) {
@@ -40,6 +38,7 @@ const Image = styled.img`
 const Right = styled.div`
     flex: 1;
     padding: 0 50px;
+    position: relative;
     @media (max-width: 445px) {
         padding: 0 20px;
     }
@@ -143,11 +142,10 @@ const Paragraph = styled.p`
 
 const Product = () => {
     const [product, setProduct] = useState()
-    const [color, setColor] = useState(null)
     const [number, setNumber] = useState(2)
     const [typeNumber, setTypeNumber] = useState(0)
     const {id} = useParams()
-    const {cart, modifyCart, products} = useContext(CartContext)
+    const {cart, modifyCart, products, setProducts} = useContext(CartContext)
     const {user} = useContext(UserContext)
     const [success, setSuccess] = useState(false)
 
@@ -162,10 +160,11 @@ const Product = () => {
         
         const data = await response.json()
         setProduct(data)
+
     }
+
     
     const onColorClick = (color) => {
-        setColor(color)
         for(let i = 0; i< product.types.length; i++ ) {
             if(product.types[i].color === color) {
                 setTypeNumber(i)
@@ -187,12 +186,18 @@ const Product = () => {
             if(localStorage.getItem("products")) {
                 let LocalStotageProducts = products
     
-                LocalStotageProducts = [content, ...LocalStotageProducts]
-                console.log(LocalStotageProducts);
+                if(LocalStotageProducts === 0) {
+                    LocalStotageProducts = [
+                        content
+                    ]
+                } else {
+                    LocalStotageProducts = [content, ...LocalStotageProducts]
+                }
                 localStorage.setItem('products', JSON.stringify(LocalStotageProducts))
             } else {
                 localStorage.setItem('products', JSON.stringify([content]))
             }
+            setProducts(JSON.parse(localStorage.getItem('products')))
         } else {
             let cartProducts = cart.products
             if(cartProducts.length === 0) {
@@ -207,15 +212,13 @@ const Product = () => {
             }
             modifyCart(cart._id, cartProducts)
         }
- 
-        setTimeout(myTimeout, 3000);
+        setTimeout(myTimeout, 2000);
         setSuccess(true)
     }
 
     const myTimeout = () => {
         setSuccess(false)
     }
-   
 
     const onSizeClick = (item) => {
         for(let i = 0; i < product.size.length; i++) {
@@ -230,11 +233,7 @@ const Product = () => {
     }
     
   return (
-    <motion.div
-        initial= {{ width: 0 }}
-        animate= {{ width: "100%" }}
-        exit= {{ x: window.innerWidth, transition: {duration: 0.3} }}
-    >
+    <div>
         <Navbar/>
         <Wrapper>
             <Left>
@@ -250,26 +249,30 @@ const Product = () => {
                     <Filter>
                         <FilterTitle>Color</FilterTitle>
                         {product.types.map(type => (
-                            <FilterColor color= {type.color} onClick= {() => onColorClick(type.color)}/>
+                            <FilterColor color= {type.color} onClick= {() => onColorClick(type.color)} key= {type.color}/>
                         ))}
                     </Filter>
                     <Filter>
                         <FilterTitle>Size</FilterTitle>
                         {product.size.map(item => {
-                            return <FilterSize onClick={() => onSizeClick(item)} number = {number}>EU {item}</FilterSize> 
+                            return <FilterSize 
+                                onClick={() => onSizeClick(item)} 
+                                number = {number}
+                                key= {item}
+                            >EU {item}</FilterSize> 
                             
                         })}
                     </Filter>
                 </FilterContainer>
                 <Button onClick={() => onAddBasketButtonClick ()}>Ajouter au panier</Button>
+                <SuccessContainer success= {success}>
+                    <CheckCircleOutlineOutlinedIcon/>
+                    <Paragraph>Ajouter au panier</Paragraph>
+                </SuccessContainer>
             </Right>
-            <SuccessContainer success= {success}>
-                <CheckCircleOutlineOutlinedIcon/>
-                <Paragraph>Ajouter au panier</Paragraph>
-            </SuccessContainer>
         </Wrapper>
         <Footer/>
-    </motion.div>
+    </div>
   )
 }
 

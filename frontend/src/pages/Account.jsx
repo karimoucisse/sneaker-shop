@@ -1,4 +1,3 @@
-import { motion } from 'framer-motion'
 import styled from "styled-components"
 import Footer from '../components/Footer'
 import Navbar from '../components/Navbar'
@@ -25,9 +24,7 @@ const Title = styled.h1`
 const Account = () => {
     const [navNumber, setNavNumber] = useState()
   return (
-    <motion.div
-        style={{backgroundColor: "#F1EBE7"}}
-    >
+    <div>
         <Navbar/>
         <Title>Mon compte</Title>
         <Container>
@@ -36,7 +33,7 @@ const Account = () => {
             {navNumber === 2 && <Order/>}
         </Container>
         <Footer/>
-    </motion.div>
+    </div>
   )
 }
 

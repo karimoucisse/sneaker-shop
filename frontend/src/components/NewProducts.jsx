@@ -12,29 +12,17 @@ const Title = styled.h2`
     margin: 20px 0 10px 40px;
 `
 const Box = styled.div`
-    /* padding: 20px 40px;
-    justify-content: space-between;
-    display: flex;
-    flex-wrap: wrap;
-    @media (max-width: 720px) {
-        justify-content: center;
-    } */
-
-    padding: 40px;
+  padding: 40px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(1, 1fr);
+  /* grid-template-rows: repeat(1, 1fr); */
   grid-column-gap: 30px;
   grid-row-gap: 30px;
-  @media (max-width: 1070px) {
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(2, 1fr);
-  }
-  @media (max-width: 820px) {
+  @media (max-width: 1100px) {
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(2, 1fr);
   }
-  @media (max-width: 570px) {
+  @media (max-width: 730px) {
     grid-template-columns: repeat(1, 1fr);
     grid-template-rows: repeat(2, 1fr);
   }
@@ -54,6 +42,7 @@ const NewProducts = () => {
         const data = await response.json()
         setProducts(data)
     }
+
     if(!products) {
         return null
     }
@@ -62,8 +51,8 @@ const NewProducts = () => {
     <Container>
         <Title>Nouveautés</Title>
         <Box>
-            {products.map(product => (
-                <Product product = {product}/>
+            {products.map((product, index) => (
+                <Product product = {product} key= {index}/>
             ))}
         </Box>
     </Container>

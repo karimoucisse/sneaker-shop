@@ -1,4 +1,5 @@
 import styled from "styled-components"
+import { useContext } from "react"
 import { Link } from "react-router-dom";
 import FacebookIcon from '@mui/icons-material/Facebook';
 import InstagramIcon from '@mui/icons-material/Instagram';
@@ -8,6 +9,7 @@ import RoomIcon from '@mui/icons-material/Room';
 import PhoneIcon from '@mui/icons-material/Phone';
 import EmailIcon from '@mui/icons-material/Email';
 import { useMediaQuery } from 'react-responsive'
+import { UserContext } from "../context/User";
 
 const Container = styled.footer`
     display: flex;
@@ -104,7 +106,7 @@ const ContactItem = styled.div`
 `
 
 const Footer = () => {
-
+    const {user} = useContext(UserContext)
     const isBigScreen = useMediaQuery({ query: '(min-width: 748px)' })
     const isTabletOrMobile = useMediaQuery({ query: '(max-width: 748px)' })
 
@@ -136,7 +138,7 @@ const Footer = () => {
                 <ListItem to= "/basket">Panier</ListItem>
                 <ListItem to= "/products/Man">Homme</ListItem>
                 <ListItem to= "/products/Woman">Femme</ListItem> 
-                <ListItem to= "/my-account">Mon compte</ListItem>
+                {user && <ListItem to= "/my-account">Mon compte</ListItem>}
                 <ListItem to= "/">Terms</ListItem>
             </List>
         </Center>

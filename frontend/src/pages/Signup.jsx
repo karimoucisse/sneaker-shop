@@ -2,12 +2,12 @@ import styled from "styled-components"
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { useContext, useState } from "react";
-import { UserContext } from "../context/User";
+import { UserContext} from "../context/User";
 import { useNavigate } from "react-router-dom";
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import Navbar from "../components/Navbar";
-import { motion } from 'framer-motion'
+import { CartContext } from "../context/Cart";
 
 
 const Container = styled.div`
@@ -95,11 +95,9 @@ const Button = styled.button`
         color: #212a2f;
         border-color: black ;
         transition: all ease-in 0.2s;
-        /* transform: scale(1.01); */
     }
 `
 const ErrorMessage = styled.p`
-    /* flex: 2; */
     width: 100%;
     color: red;
     animation: blink 1.7s linear infinite;
@@ -119,7 +117,6 @@ const ErrorMessage = styled.p`
 const Signup = () => {
     const navigate = useNavigate()
     const [isHidden, setIsHidden] = useState(true)
-    const {getUser} = useContext(UserContext)
 
     const formik = useFormik({
         initialValues: {
@@ -169,15 +166,12 @@ const Signup = () => {
         if(response.status >= 400) {
             console.log("Error")
         }else {
-            navigate('/')
+            const userSignUp = await response.json()
+            navigate('/login')
         }
     }
     return (
-        <motion.Container
-            initial= {{ opacity: 0 }}
-            animate= {{ opacity: 1 }}
-            exit= {{ opacity: 0 }}
-        >
+        <div>
             <Navbar/>
             <Container>
 
@@ -247,9 +241,6 @@ const Signup = () => {
                             onChange={formik.handleChange}
                         />
                         {formik.errors.adress && <ErrorMessage>{formik.errors.adress}</ErrorMessage>}
-                        {/* <PasswordContainer>
-                            <PasswordInput placeholder= "confirme mot de passe" type= "password"/>
-                        </PasswordContainer> */}
                         <Agreement>
                             By creating an account, I consent to the processing of my
                             personnal data in accordance with the <b>PRIVACY POLICY</b> 
@@ -258,7 +249,7 @@ const Signup = () => {
                     </Form>
                 </Wrapper>
             </Container>
-        </motion.Container>
+        </div>
     )
 }
 

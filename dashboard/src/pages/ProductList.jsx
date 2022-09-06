@@ -16,7 +16,7 @@ const Container = styled.div`
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(2, 1fr);
   grid-column-gap: 16px;
-  grid-row-gap: 24px;
+  grid-row-gap: 30px;
 `
 
 

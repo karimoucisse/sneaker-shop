@@ -4,6 +4,7 @@ const UserContext = createContext({})
 
 const UserContextProvider = props => {
     const [users, setUsers] = useState(null)
+    const [itemNumber, setItemNumber] = useState(1)
 
     const API = "http://localhost:5000/user"
 
@@ -24,7 +25,9 @@ const UserContextProvider = props => {
     
     const value = {
         users,
-        setUsers  
+        setUsers,
+        itemNumber, 
+        setItemNumber 
     }
     
     return (

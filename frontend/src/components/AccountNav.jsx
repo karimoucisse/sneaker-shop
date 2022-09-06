@@ -6,13 +6,9 @@ import { UserContext } from "../context/User";
 import { CartContext } from "../context/Cart";
 
 const Container = styled.div`
-    /* flex: 1; */
     padding: 20px 0;
-    /* width: 300px; */
-    /* height: 70vh; */
     display: flex;
     flex-direction: column;
-    /* justify-content: center; */
     @media (max-width: 770px) {
         flex-direction: row;
         flex-wrap: wrap;
@@ -35,12 +31,9 @@ const Paragraph = styled.div`
         color: white;
     }
     @media (max-width: 770px) {
-        /* max-height: 70px; */
         display: flex;
         align-items: center;
-        /* padding: 20px 0px; */
         width: 300px;
-        /* flex: 1; */
         text-align: center;
     } 
 `
@@ -62,7 +55,6 @@ const AccountNav = ({setNavNumber}) => {
             },
             
             credentials: 'include'
-            // body: JSON.stringify(values)
         })
         setUser(null)
         setCart(null)

@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 const Container = styled.div`
     min-width: 100px;
+    height: 300px;
     box-shadow: 4px 4px 4px rgba(232, 227, 227, 0.7);
     cursor: pointer;
     transition: all 0.2s;

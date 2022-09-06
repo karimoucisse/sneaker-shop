@@ -14,7 +14,7 @@ const OrderCard = ({item}) => {
 
   return (
     <Container>
-        {item.products.map(product => (
+        {item.products.map((product) => (
             <OrderProduct product= {product}/>
         ))}
         <p>Adress de livraison : {item.address}</p>

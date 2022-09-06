@@ -7,7 +7,6 @@ import Loading from "./Loading";
 const Container = styled.div`
     max-width: 600px;
     height: 130px;
-    /* border: 2px solid; */
     display: flex;
     background-color: #ffff;
     box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 8px;
@@ -54,23 +53,18 @@ const Paragraph = styled.p`
 `
 
 const BasketItems = ({item, index}) => {
-    const {cart, modifyCart, products} = useContext(CartContext)
-
-    useEffect(() => {
-        console.log("item: " + item);
-    }, [])
+    const {cart, modifyCart, products, setProducts} = useContext(CartContext)
 
     const onDeleteClick = () => {
         if(products) {
             if(products.length > 1) {
-                // let products = JSON.parse(localStorage.getItem('products'))
                 products.splice(index, 1)
                 console.log(products);
-                // localStorage.removeItem('products')
                 localStorage.setItem('products', JSON.stringify(products))
             } else {
                 localStorage.removeItem('products')
             }
+            setProducts(JSON.parse(localStorage.getItem('products')))
         }
         if(cart) {
             const cartProducts = cart.products
@@ -79,53 +73,43 @@ const BasketItems = ({item, index}) => {
         }
     }
 
-
-
-
-    // if(!cart) {
-    //     return <Loading/>
-    // }
-    // if(!item) {
-    //     return null
-    // }
-
   return (
     <Container>
         {products &&
-        <>
-            <Left>
-                <Image src= {item.product.type.image} />
-            </Left>
-            <Right>
-                <Top>
-                    <div>
-                        <Title>{item.product.name}</Title>
-                        <Paragraph>Prix: {item.product.price}€</Paragraph>
-                        <Paragraph>Couleur: {item.product.color}</Paragraph>
-                        <Paragraph>Taille: {item.product.size}</Paragraph>
-                    </div>
-                    <DeleteContainer onClick={() => onDeleteClick()}/>
-                </Top>
-            </Right>
-        </>
+            <>
+                <Left>
+                    <Image src= {item.product.type.image} />
+                </Left>
+                <Right>
+                    <Top>
+                        <div>
+                            <Title>{item.product.name}</Title>
+                            <Paragraph>Prix: {item.product.price}€</Paragraph>
+                            <Paragraph>Couleur: {item.product.color}</Paragraph>
+                            <Paragraph>Taille: {item.product.size}</Paragraph>
+                        </div>
+                        <DeleteContainer onClick={() => onDeleteClick()}/>
+                    </Top>
+                </Right>
+            </>
         }
         {cart && 
-        <>
-            <Left>
-                <Image src= {item.product[0].type.image} />
-            </Left>
-            <Right>
-                <Top>
-                    <div>
-                        <Title>{item.product[0].name}</Title>
-                        <Paragraph>Prix: {item.product[0].price}€</Paragraph>
-                        <Paragraph>Couleur: {item.product[0].type.color}</Paragraph>
-                        <Paragraph>Taille: {item.product[0].size}cm</Paragraph>
-                    </div>
-                    <DeleteContainer onClick={() => onDeleteClick()}/>
-                </Top>
-            </Right>
-        </>
+            <>
+                <Left>
+                    <Image src= {item.product[0].type.image} />
+                </Left>
+                <Right>
+                    <Top>
+                        <div>
+                            <Title>{item.product[0].name}</Title>
+                            <Paragraph>Prix: {item.product[0].price}€</Paragraph>
+                            <Paragraph>Couleur: {item.product[0].type.color}</Paragraph>
+                            <Paragraph>Taille: {item.product[0].size}cm</Paragraph>
+                        </div>
+                        <DeleteContainer onClick={() => onDeleteClick()}/>
+                    </Top>
+                </Right>
+            </>
         }
     </Container>
   )
