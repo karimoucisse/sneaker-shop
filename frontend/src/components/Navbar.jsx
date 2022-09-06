@@ -173,7 +173,7 @@ const Navbar = () => {
                         }
                         {user && <MenuItem to= "/my-account"><AccountCircleIcon/></MenuItem>}
                         <BadgeContainer to= '/basket'>
-                            {cart &&
+                            {user &&
                                 <Badge 
                                     badgeContent={cart ? cart.products.length : 0} color="primary"
                                 >
@@ -181,7 +181,7 @@ const Navbar = () => {
                                 </Badge>
                         
                             }
-                            {products && 
+                            {!user && 
                                 <Badge 
                                     badgeContent={products ? products.length : 0} color="primary"
                                 >

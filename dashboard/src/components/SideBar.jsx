@@ -5,7 +5,9 @@ import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined
 import AttachMoneyOutlinedIcon from '@mui/icons-material/AttachMoneyOutlined';
 import BarChartOutlinedIcon from '@mui/icons-material/BarChartOutlined';
 import StorefrontOutlinedIcon from '@mui/icons-material/StorefrontOutlined';
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { UserContext } from "../context/User";
+import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
     flex: 1;
@@ -47,11 +49,30 @@ const Item = styled.li`
     }
 `
 const SideBar = () => {
-    const [itemNumber, setItemNumber] = useState(1) 
+     const {itemNumber, setItemNumber } = useContext(UserContext)
+    const navigate = useNavigate()
+
     const onItemClick = (number) => {
         setItemNumber(number)
-        console.log(itemNumber);
-    }
+        switch (number) {
+        case 1:
+            navigate('/')
+            break;
+        case 2:
+            navigate('/users')
+            break;
+        case 3:
+            navigate('/products')
+            break;
+        case 4:
+            navigate('/orders')
+            break;
+        case 5:
+            navigate('/table')
+            break;
+        default:
+            console.log(`error`);
+    }}
   return (
     <Container>
         <Menu>
@@ -83,5 +104,4 @@ const SideBar = () => {
     </Container>
   )
 }
-
 export default SideBar

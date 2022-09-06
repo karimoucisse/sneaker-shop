@@ -4,33 +4,23 @@ const User = require('../models/User')
 const bcrypt = require('bcrypt')
 const passport = require('../config/passport')
 const {isSameEmail} = require('../middlewares/sameEmail')
-
-
-// ALLOW USER TO LOGIN
+const {isUserConnected} = require('../middlewares/isUserConnected')
 
 // sur la route POST `/login`, on utilise la stratégie locale en stratégie qui va nous permettre
 // de stocker un user en session sur le serveur
-
-app.post("/login", passport.authenticate("local"), (req, res) => {
+app.post("/login", passport.authenticate("local"), isUserConnected, (req, res) => {
     
     // si le user existe (il est maintenant dans `req.user`,
 	// on utilise `req.logIn`, qui nous vient de passport pour stocker la session
 	// du user. Et je renvoie le user au client (postman ou mon navigateur).
-    if(req.user) {
         req.logIn(req.user, async err => {
             if(err) {
-                console.log(err);
             }else {
                 const user = await User.findOne({_id: req.user._id})
-                    .lean()
-                    .exec()
-                res.json(user)
+                res.status(200).json(user)
             }
         })
-    }
 })
-
-
 
 
 app.post("/signup", isSameEmail, (req, res) => {
@@ -43,7 +33,6 @@ app.post("/signup", isSameEmail, (req, res) => {
             user.save()
                 .then(() => {
                     res.status(201).json({ message: 'user is created' })
-                    console.log(user);
                 })
                 .catch(error => res.status(400).json({ error }))
         })
@@ -51,21 +40,17 @@ app.post("/signup", isSameEmail, (req, res) => {
 })
 
 
-app.get('/me', async (req, res) => {
-    if (req.user) {
+app.get('/me', isUserConnected, async (req, res) => {
+
         try {
             const user = await User.findById(req.user[0]._id)
-            res.json(user)
-            console.log(user);
+            res.status(200).json(user)
         } catch(err) {
-            console.log(err)
+            res.status(400).json({ error })
         }
-    } else {
-        res.status(401).json({ error: "Unauthorized"})
-    }
 })
 
-// AllOW USER TO LOGOUT
+
 app.delete("/logout", async (req, res) => {
     req.session.destroy()
     req.logout()

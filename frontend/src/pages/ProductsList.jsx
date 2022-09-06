@@ -4,7 +4,6 @@ import styled from "styled-components"
 import Footer from "../components/Footer"
 import Navbar from "../components/Navbar"
 import Products from "../components/Products"
-import { motion } from 'framer-motion'
 import Loading from "../components/Loading"
 
 
@@ -38,14 +37,14 @@ const Option = styled.option`
 `
 const ProductsList = () => {
     const [products, setProducts] = useState()
-    const {id} = useParams()
+    const {genre} = useParams()
     
     useEffect(() => {
         getProducts()
-    }, [id])
+    }, [genre])
 
     const getProducts = async () => {
-        const response = await fetch(`http://localhost:5000/products?category=${id}`, {
+        const response = await fetch(`http://localhost:5000/products?category=${genre}`, {
             credentials: 'include',
         })
         
@@ -57,14 +56,10 @@ const ProductsList = () => {
     }
 
   return (
-    <motion.div
-        initial= {{ width: 0 }}
-        animate= {{ width: "100%" }}
-        exit= {{ x: window.innerWidth, transition: {duration: 0.3} }}
-    >
+    <div>
         <Navbar/>
-        {id === "Man" && <Title>Homme</Title>}
-        {id === "Woman" && <Title>Femme</Title>}
+        {genre === "Man" && <Title>Homme</Title>}
+        {genre === "Woman" && <Title>Femme</Title>}
         <FilterContainer>
             <Filter>
                 <FilterText>Filter brands: </FilterText>
@@ -87,7 +82,7 @@ const ProductsList = () => {
         </FilterContainer>
         <Products products= {products}/>
         <Footer/>
-    </motion.div>
+    </div>
   )
 }
 

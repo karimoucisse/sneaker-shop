@@ -7,12 +7,6 @@ const passport = require('./config/passport')
 const cors = require('cors')
 const expressSession = require('express-session')
 
-// require('./routes/auth')
-// require('./routes/cart')
-// require('./routes/order')
-// require('./routes/products')
-// require('./routes/user')
-
 const authRoute = require('./routes/auth')
 const cartRoute = require('./routes/cart')
 const orderRoute = require('./routes/order')
@@ -25,11 +19,15 @@ mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true, useUnifiedTo
   .catch(() => console.log('Connection to MongoDB failed !'))
 
 app.use(express.json())
+
+// En d'autres termes, CORS est une fonctionnalité de sécurité du navigateur qui limite
+// les requêtes HTTP cross-origin avec d'autres serveurs et spécifie 
+// quels domaines accèdent à vos ressources.
 app.use(cors({
     origin: process.env.ALLOWED_DOMAIN,
     credentials: true
 }))
-app.use(express.static('public'))
+
 app.use(expressSession({
     secret: process.env.SECRET,
     resave: true,
@@ -45,8 +43,6 @@ app.use('/order', orderRoute)
 app.use('/products', productsRoute)
 app.use('/user', userRoute)
 app.use('/payment', stripeRoute)
-
-
 
 
 app.listen(port, () => {

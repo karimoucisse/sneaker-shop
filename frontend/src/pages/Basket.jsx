@@ -2,11 +2,10 @@ import styled from "styled-components"
 import BasketItems from "../components/BasketItems"
 import Footer from "../components/Footer"
 import Navbar from "../components/Navbar"
-import { motion } from 'framer-motion'
 import { useContext, useEffect } from "react"
 import { CartContext } from "../context/Cart"
 import TotalCard from "../components/TotalCard"
-import Loading from "../components/Loading"
+import { useNavigate } from "react-router-dom"
 
 
 
@@ -35,6 +34,14 @@ const Left = styled.div`
         width: 100%;
     }
 `
+const EmptyContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    gap: 25px;
+`
 const EmptyTitle = styled.p`
     display: flex;
     justify-content: center;
@@ -43,9 +50,24 @@ const EmptyTitle = styled.p`
     font-weight: 300;
     width: 100%;
 `
+const Button = styled.button`
+    padding: 10px 20px;
+    color: white;
+    background-color: rgb(33,42,47);
+    border: 1px solid darkblue;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all ease-in .2s;
+    &:hover {
+        background-color: white;
+        color: rgb(33,42,47);
+    }
+`
+
 const Basket = () => {
     const {products, setProducts, cart} = useContext(CartContext)
-    // const [products, setProducts] = useState() ;
+    const navigate = useNavigate()
 
     useEffect(() => {
         if(!cart) {
@@ -53,20 +75,8 @@ const Basket = () => {
         } 
     }, [cart, setProducts])
 
-    // if(!cart) {
-    //    return <Loading/>
-    // }
-    // if(!products) {
-    //    return <Loading/>
-    // }
-
   return (
-    <motion.div
-        style={{ backgroundColor: "#FAF9F8"}}
-        initial= {{ width: 0 }}
-        animate= {{ width: "100%" }}
-        exit= {{ x: window.innerWidth, transition: {duration: 0.3} }}
-    >
+    <div>
         <Navbar/>
         <Title>Panier</Title>
         <Container>
@@ -74,33 +84,39 @@ const Basket = () => {
                 <>
                     <Left>
                         {products.map((item, index) => 
-                            <BasketItems item = {item} index= {index} /> 
+                            <BasketItems item = {item} index= {index} key = {index} /> 
                         )}
                     </Left>
                     <TotalCard />
                 </>
             }
 
-            {cart === null && !products && 
-                <EmptyTitle>Il n'y a pas d'article dans votre panier</EmptyTitle>
+            {!cart && !products && 
+                <EmptyContainer>
+                    <EmptyTitle>Il n'y a pas d'article dans votre panier</EmptyTitle>
+                    <Button  onClick={() => navigate('/')}>Go shopping</Button>
+                </EmptyContainer>
             }
 
             {cart && cart.products.length > 0 &&
                 <>
                     <Left>
                         {cart.products.map((item, index) => 
-                            <BasketItems item = {item} index= {index} /> 
+                            <BasketItems item = {item} index= {index} key= {index}/> 
                         )}
                     </Left>
                     <TotalCard/>
                 </>
             }
             {cart && cart.products.length === 0 && 
-                <EmptyTitle>Il n'y a pas d'article dans votre panier</EmptyTitle>
+                <EmptyContainer>
+                    <EmptyTitle>Il n'y a pas d'article dans votre panier</EmptyTitle>
+                    <Button  onClick={() => navigate('/')}>Go shopping</Button>
+                </EmptyContainer>
             }
         </Container>
         <Footer/>
-    </motion.div>
+    </div>
   )
 }
 

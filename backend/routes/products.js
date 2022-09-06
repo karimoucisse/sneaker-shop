@@ -26,7 +26,6 @@ app.put('/:id', isAdmin, async (req, res) => {
             .exec()
         res.json(modifyProduct)
     }catch (err){
-        console.log(err)
         res.status(500).json(err)
     }
 })
@@ -47,7 +46,6 @@ app.get('/:id', async (req, res) => {
     const {id} = req.params
     try {
         const product = await Product.findById(id)
-        .exec()
         res.json(product)
     } catch (err) {
         console.log(err)

@@ -18,12 +18,12 @@ const App = () => {
         <ProductContextProvider>
           <Routes>
             <Route exact path = "/" element= {<Home/>}/>
-            <Route exact path = "/user/:id" element= {<User/>}/>
-            <Route exact path = "/users" element= {<Users/>}/>
-            <Route exact path = "/new-user" element= {<NewUser/>}/>
-            <Route exact path = "/product/:id" element= {<Product/>}/>
-            <Route exact path = "/products" element= {<ProductList/>}/>
-            <Route exact path = "/new-product" element= {<NewProduct/>}/>
+            <Route path = "/user/:id" element= {<User/>}/>
+            <Route path = "/users" element= {<Users/>}/>
+            <Route path = "/new-user" element= {<NewUser/>}/>
+            <Route path = "/product/:id" element= {<Product/>}/>
+            <Route path = "/products" element= {<ProductList/>}/>
+            <Route path = "/new-product" element= {<NewProduct/>}/>
           </Routes>
         </ProductContextProvider>
       </OrderContextProvider>

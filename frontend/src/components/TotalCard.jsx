@@ -87,12 +87,12 @@ const ValidationBtn = styled.button`
 const TotalCard = () => {
     const {cart, modifyCart} = useContext(CartContext)
     const {user} = useContext(UserContext)
-    const {createOrder} = useContext(OrderContext)
+    const {createOrder, getOrders} = useContext(OrderContext)
     const navigate = useNavigate()
     const [totalPrice, setTotalPrice] = useState(0)
     const finalTotal = totalPrice +4
     const stripeTotal = finalTotal * 100
-    const stripePubliKey = "pk_test_51KuOfTD02MbHzUJv4QbJeezaYjUtN63wqsEq4rYz2ix8T0xQR4tVmqB0KCc0SyqaFrJlMAxrwZdPHWmY3hDjiTnP00hlEWdkpl"
+    const stripePubliKey = 'pk_test_51KuOfTD02MbHzUJv4QbJeezaYjUtN63wqsEq4rYz2ix8T0xQR4tVmqB0KCc0SyqaFrJlMAxrwZdPHWmY3hDjiTnP00hlEWdkpl'
     const [stripeToken, setStripeToken] = useState() 
 
     const newOrder = {
@@ -137,25 +137,19 @@ const TotalCard = () => {
                 })
             })
             if(response.status >= 400) {
-                createOrder(newOrder)
+                console.log('error');
             } else {
-                console.log('response: ' + response);
+                createOrder(newOrder)
+                {cart ? modifyCart(cart._id, []) : localStorage.removeItem('products')}
+                getOrders()
+                navigate('/')
             }
         }
         if(stripeToken) {
             stripeRequest()
-            {cart ? modifyCart(cart._id, []) : localStorage.removeItem('products')}
-            
-            navigate('/')
         }
     }, [stripeToken])
 
-    // if(!cart) {
-    //     return null
-    // // }
-    // if(!user) {
-    //     return <p>no user</p>
-    // }
   return (
     <Container>
         <Card>
@@ -179,18 +173,25 @@ const TotalCard = () => {
                 <TotalParagraph>{finalTotal}€</TotalParagraph>
             </TotalContainer>
             <StripeCheckout
+                // nom de mon entreprise
                 name= "Sneaker Shop"
+                // Logo
                 image= "https://cdn.shopify.com/s/files/1/2358/2817/products/air-max-90-off-white-desert-ore-672202.png?v=1638813390"
                 description={`Votre Total est de ` + finalTotal + "€" }
+                // montant * 100 car le prix est en cents
                 amount= {stripeTotal}
+                // contient des information du type :
+                // la date de l'achat, le type d'achat par cart par exemple
+                // notre email
                 token = {onToken}
                 stripeKey= {stripePubliKey}
                 currency="EUR"
             >
                 <ValidationBtn 
-                    onClick={() => createOrder(newOrder)}
                     disabled = {!user ? 1 : 0}
-                >Finaliser la commande</ValidationBtn>
+                >
+                    Finaliser la commande
+                </ValidationBtn>
             </StripeCheckout>
         </Card>
     </Container>

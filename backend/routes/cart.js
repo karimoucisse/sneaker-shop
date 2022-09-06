@@ -5,7 +5,7 @@ const { isAdmin } = require('../middlewares/isAdmin')
 
 //CREATE CART
 app.post('/', async (req, res) => {
-    const newCart = new Cart(req.body)
+    const newCart = new Cart ({...req.body})
     try {
         const savedCart = await newCart.save()
         res.status(200).json(savedCart)
@@ -13,6 +13,7 @@ app.post('/', async (req, res) => {
         res.status(500).json(err)
     }
 })
+
 
 //MODIFY CART
 app.put('/:id', async (req, res) => {

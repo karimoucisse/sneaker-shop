@@ -28,8 +28,8 @@ const Order = () => {
   return (
     <Container>
         {order.length > 0 && 
-            order.map(item => (
-                <OrderCard item= {item}/>
+            order.map((item, index) => (
+                <OrderCard item= {item} key= {index}/>
             ))
         }
        {order.length === 0 && <Paragraph>Vous n'avez passer aucune commande</Paragraph>}

@@ -2,7 +2,6 @@ import styled from "styled-components"
 import { Link } from 'react-router-dom';
 
 const Container = styled(Link)`
-    /* flex: 1; */
     min-width: 100px;
     box-shadow: 4px 4px 4px rgba(232, 227, 227, 0.7);
     background-color: rgb(246,246,246);
@@ -33,12 +32,11 @@ const Title = styled.h3`
 `
 const Paragraph = styled.p`
     font-weight: 600;
-    /* color: #525151; */
 `
 const Product = ({product}) => {
-    
+
   return (
-    <Container to = {`/product/${product._id}`} onClick={() => console.log('hello word')}>
+    <Container to = {`/product/${product._id}`}>
         <Image src= {product.types[0].image} />
         <Desc>
             <div>

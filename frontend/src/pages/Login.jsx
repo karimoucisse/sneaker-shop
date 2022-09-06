@@ -8,7 +8,6 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import Navbar from "../components/Navbar";
-import { motion } from 'framer-motion'
 import { CartContext } from "../context/Cart";
 
 const Container = styled.div`
@@ -32,7 +31,14 @@ const Title = styled.h1`
 const Form = styled.form`
     display: flex;
     flex-direction: column;
-    min-width: 280px;
+    width: 380px;
+    padding: 20px 0;
+    @media (max-width: 455px) {
+        width: 300px;
+    }
+    @media (max-width: 350px) {
+        max-width: 280px;
+    }
 `
 const PasswordContainer = styled.div`
     position: relative;
@@ -70,7 +76,9 @@ const Input = styled.input`
     padding: 10px;
     font-size: 16px;
 `
-
+const MessageError = styled.p`
+    color: red;
+`
 const Button = styled.button`
     margin: 10px 0;
     padding: 12px 35px;
@@ -108,11 +116,12 @@ const Login = () => {
     const [isHidden, setIsHidden] = useState(true)
     const {setUser} = useContext(UserContext)
     const {onLogin} = useContext(CartContext)
+    const [message, setMessage] = useState(false)
 
     const formik = useFormik({
         initialValues: {
-            email: "karimou.cisse@gmail.com",
-            password: "Karimou1234",
+            email: "",
+            password: "",
         },
         onSubmit: async values => {
             login(values)
@@ -139,10 +148,11 @@ const Login = () => {
             body: JSON.stringify(values)
         })
         if(response.status >= 400) {
-            alert("Error")
+            setMessage(true)
         } else {
             const userLogged = await response.json()
             setUser(userLogged)
+            setMessage(false)
             onLogin()
             navigate('/')
         }
@@ -150,11 +160,7 @@ const Login = () => {
 
 
   return (
-    <motion.Container
-        initial= {{ oapcity: 0 }}
-        animate= {{ opacity: 1 }}
-        exit= {{ opacity: 0 }}
-    >
+    <div>
         <Navbar/>
         <Container>
             <Wrapper>
@@ -167,6 +173,7 @@ const Login = () => {
                         value= {formik.values.email}
                         onChange={formik.handleChange}
                     />
+                    {formik.errors.email && <MessageError>{formik.errors.email}</MessageError>}
                     <PasswordContainer>
                         <Input 
                             placeholder= "mot de passe" 
@@ -180,13 +187,15 @@ const Login = () => {
                             : <OpenEyeIcon onClick={() => setIsHidden(true)}/>
                         }
                     </PasswordContainer>
+                    {formik.errors.password && <MessageError>{formik.errors.password}</MessageError>}
+                    {message && <MessageError>Votre mot de passe ou votre email est incorrecte</MessageError>}
                     <Button type= "submit">SE CONNECTER</Button>
                     <Linker to ="/">Mot de passe oublié</Linker>
                     <Paragraph>Vous n'êtes pas encore membre ?<Linker to= "/signup">Rejoignez-nous.</Linker></Paragraph>
                 </Form>
             </Wrapper>
         </Container>
-    </motion.Container>
+    </div>
   )
 }
 
