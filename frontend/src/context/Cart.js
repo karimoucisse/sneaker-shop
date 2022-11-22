@@ -16,6 +16,7 @@ const CartContextProvider = props => {
         if(user) {
             onLogin()
         } 
+        
     },[user, cart])
 
    
