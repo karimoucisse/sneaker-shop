@@ -21,7 +21,7 @@ mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true, useUnifiedTo
 app.use(express.json())
 
 // En d'autres termes, CORS est une fonctionnalité de sécurité du navigateur qui limite
-// les requêtes HTTP cross-origin avec d'autres serveurs et spécifie 
+// les requêtes HTTP cross-origin avec d'autres serveurs et spécifie
 // quels domaines accèdent à vos ressources.
 app.use(cors({
     origin: process.env.ALLOWED_DOMAIN,
